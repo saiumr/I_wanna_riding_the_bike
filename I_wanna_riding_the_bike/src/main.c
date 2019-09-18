@@ -18,15 +18,16 @@
 #define DELAY_TIME 60
 
 int main(int argc, char** argv){
+    setLogLevel(LOG_ERROR);
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Window* window = SDL_CreateWindow("I wanna riding the bike!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
     if(!window){
-        perror("window not created");
+        log_error("window create failed");
         return WINDOW_ERROR;
     }
     SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
     if(!render){
-        perror("render not created");
+        log_error("render created failed");
         return RENDER_ERROR;
     }
 

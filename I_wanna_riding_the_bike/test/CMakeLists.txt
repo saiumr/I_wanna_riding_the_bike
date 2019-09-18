@@ -7,3 +7,9 @@ endmacro()
 
 add_test(ttest.c)
 add_test(tlog.c ../src/log.c)
+
+find_package(SDL2 REQUIRED)
+if(SDL2_FOUND)
+    include_directories(tlog.test ${SDL2_INCLUDE_DIRS})
+    target_link_libraries(tlog.test ${SDL2_LIBRARIES})
+endif(SDL2_FOUND)

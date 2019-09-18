@@ -14,12 +14,13 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 #include <stdio.h>
-#include <time.h>
+#include "SDL.h"
+//#define MSGBOX_LOG  /* if defined this, log_error() will show a error messagebox */
+#define LOG_OFF     1000
 #define LOG_ERROR   1001
 #define LOG_DEBUG   1002
 #define LOG_WARN    1003
 #define LOG_INFO    1004
-#define LOG_OFF     1005
 typedef unsigned int log_level;
 
 static log_level __loglevel = LOG_INFO;

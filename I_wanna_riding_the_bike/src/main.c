@@ -10,6 +10,8 @@
  */
 #include <stdio.h>
 #include "SDL.h"
+
+#include "log.h"
 #include "error.h"
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 800
@@ -30,6 +32,9 @@ int main(int argc, char** argv){
 
     SDL_bool isquit = SDL_FALSE;
     SDL_Event event;
+
+    //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "error", "this is error", NULL);
+
     while(!isquit){
         SDL_RenderClear(render);
         while(SDL_PollEvent(&event)){

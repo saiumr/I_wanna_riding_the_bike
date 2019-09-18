@@ -8,8 +8,17 @@ endmacro()
 add_test(ttest.c)
 add_test(tlog.c ../src/log.c)
 
-find_package(SDL2 REQUIRED)
-if(SDL2_FOUND)
-    include_directories(tlog.test ${SDL2_INCLUDE_DIRS})
-    target_link_libraries(tlog.test ${SDL2_LIBRARIES})
-endif(SDL2_FOUND)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    
+else()
+    find_package(SDL2 REQUIRED)
+endif()
+
+include_directories(${SDL2_INCLUDE_DIRS})
+target_link_libraries(tlog.test ${SDL2_LIBRARIES})
+
+#TODO fix the bug
+#add_custom_command(TARGET tlog.test POST_BUILD
+#    COMMAND copy ${PROJECT_SOURCE_DIR}/SDL2.dll ${PROJECT_BINARY_DIR}/SDL2.dll 
+#    DEPENDS ${PROJECT_SOURCE_DIR}/SDL2.dll
+#)

@@ -12,5 +12,6 @@ int main(){
     ADD_OUTPUT_TEST("test say", say(), "this is a output")
     ADD_OUTPUT_TEST("test say", say(), "this is not a output")
     TEST_SHOW_STATISTICS()
+    TEST_PAUSE_CONSOLE()
     return 0;
 }

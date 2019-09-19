@@ -77,4 +77,12 @@ totle num:     %d\n\
 success num:   %d\n\
 rate:          %.0f%%\n", __unittest_totle, __unittest_success_num, (float)__unittest_success_num/__unittest_totle*100);
 
+/**
+ * @brief 用于暂停控制台输出，让测试者可以看到测试结果
+ * @warn 这个宏可以放在所有测试语句的最后面。
+ */
+#define TEST_PAUSE_CONSOLE() \
+printf("\n================================\npress enter to exit\n");\
+getchar();
+
 #endif

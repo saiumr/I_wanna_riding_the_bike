@@ -39,6 +39,7 @@ int main(int argc, char** argv){
     */
     //show messagebox must define MSGBOX_LOG in log.h
 
-    TEST_SHOW_STATISTICS();
+    TEST_SHOW_STATISTICS()
+    TEST_PAUSE_CONSOLE()
     return 0;
 }

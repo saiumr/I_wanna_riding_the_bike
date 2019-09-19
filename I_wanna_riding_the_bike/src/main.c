@@ -53,6 +53,7 @@ int main(int argc, char** argv){
     SDL_FreeSurface(surface);
 
     while(!isquit){
+        int i,j;
         passedtime = SDL_GetTicks();
         SDL_RenderClear(render);
         while(SDL_PollEvent(&event)){
@@ -61,8 +62,8 @@ int main(int argc, char** argv){
         }
         float radian = angle*PI/180;
         SDL_Rect rect = dstrect;
-        for(int i=0;i<WIN_WIDTH/dstrect.w;i++)
-            for(int j=0;j<WIN_HEIGHT/dstrect.h;j++){
+        for(i=0;i<WIN_WIDTH/dstrect.w;i++)
+            for(j=0;j<WIN_HEIGHT/dstrect.h;j++){
                 rect.x = dstrect.w*i+radius*cos(radian)+50;
                 rect.y = dstrect.h*j+radius*sin(radian)+50;
                 SDL_RenderCopy(render, texture, NULL, &rect);

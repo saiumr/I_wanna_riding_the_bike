@@ -22,3 +22,8 @@
 * 增加了cmake中找到SDL2_image库的方法
 * 增加了resources文件夹用于存放资源
 * 在屏幕上绘制了一些kid...
+**2019.9.20**
+
+**saiumr**:
+
+* 增加了Windows下找到SDL2_image库的cmake文件。可以编译成可执行文件，但是没有办法运行...

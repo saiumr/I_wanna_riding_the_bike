@@ -18,7 +18,6 @@ static unsigned int __unittest_totle = 0;
 
 /**
  * @brief 用于判断表达式exp与result是否相等
- * 
  */
 #define ADD_TEST_TRUE(name, exp, result) \
 __unittest_totle++;\
@@ -31,7 +30,6 @@ if(exp==result){    \
 
 /**
  * @brief 用于判断表达式exp和result是否不等
- * 
  */
 #define ADD_TEST_FALSE(name, exp, result) \
 __unittest_totle++;\
@@ -44,7 +42,6 @@ if(exp!=result){    \
 
 /**
  * @brief 用于判断函数func的输出和result是否相等
- * 
  */
 #define ADD_OUTPUT_TEST(name, func, result) \
 {\
@@ -68,9 +65,7 @@ if(exp!=result){    \
 
 /**
  * @brief 用来显示最后测试结果的宏
- * 
  * @warn 这个宏最好放在main()函数的底部，在所有测试用例都编写完之后再使用
- * 
  */
 #define TEST_SHOW_STATISTICS() printf("\n----------test result----------:\n\
 totle num:     %d\n\

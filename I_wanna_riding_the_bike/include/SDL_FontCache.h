@@ -240,7 +240,6 @@ int FC_GetNumCacheLevels(FC_Font* font);
 /*! Returns the cache source texture at the given cache level. */
 FC_Image* FC_GetGlyphCacheLevel(FC_Font* font, int cache_level);
 
-// TODO: Specify ownership of the texture (should be shareable)
 /*! Sets a cache source texture for rendering.  New cache levels must be sequential. */
 Uint8 FC_SetGlyphCacheLevel(FC_Font* font, int cache_level, FC_Image* cache_texture);
 

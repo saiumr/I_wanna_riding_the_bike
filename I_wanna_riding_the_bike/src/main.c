@@ -37,6 +37,7 @@ int main(int argc, char** argv){
         log_error("window create failed");
         return WINDOW_ERROR;
     }
+
     SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
     if(!render){
         log_error("render created failed");

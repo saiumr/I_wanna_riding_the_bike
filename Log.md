@@ -32,7 +32,14 @@
 
 **VisualGMQ**:
 
-* 改变cmake使用c99标准编译
+* 改变cmake配置使用c99标准编译
 * 增加了SDL_FontCache库的使用，并且在main.c里面利用此库绘制了文字
 * 增加了Fangsong.ttf字体资源
 * 增加了Licenses文件夹用于保存使用的库的开源协议
+
+**2019.9.22**
+
+**VisualGMQ**
+
+* 改变了工程的结构，将一些所有文件基本都要用到的文件和资源放在了common文件夹下，并且增加了对common文件夹的cmake配置
+* 开始编写地图编辑器

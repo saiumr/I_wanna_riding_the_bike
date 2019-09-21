@@ -11,6 +11,7 @@ set(SDL2_IMAGE_DLL_PATH ${PROJECT_SOURCE_DIR}/dependence/SDL2_image_64/bin/SDL2_
 include(cmake/sdl2-config.cmake)
 include(cmake/sdl2_image-config.cmake)
 include(cmake/sdl2_ttf-config.cmake)
+include(cmake/common-config.cmake)
 
 add_subdirectory("tools")
 add_subdirectory("I_wanna_riding_the_bike")

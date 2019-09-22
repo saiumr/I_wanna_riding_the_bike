@@ -5,12 +5,7 @@ set(GAME_EXE_NAME play)
 set(RESOURCES_SRC ${CMAKE_CURRENT_SOURCE_DIR}/resources)
 set(RESOURCES_DST ${CMAKE_CURRENT_BINARY_DIR})
 
-list(APPEND ${SRC} ${COMMON_SRC_FILES})
-
-add_executable(${GAME_EXE_NAME} ${SRC})
-
-#usr's include files
-include_directories(./include ${COMMON_INCLUDE_DIRS})
+add_executable(${GAME_EXE_NAME} ${SRC} ${COMMON_SRC_FILES})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     add_custom_command(TARGET ${GAME_EXE_NAME} POST_BUILD
@@ -24,6 +19,8 @@ endif()
 file(COPY ${RESOURCES_SRC} DESTINATION ${RESOURCES_DST})
 file(COPY ${COMMON_RESOURCES_DIRS} DESTINATION ${RESOURCES_DST})
 
+#usr's include files
+include_directories(./include ${COMMON_INCLUDE_DIRS})
 #SDL2 include files
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 target_link_libraries(${GAME_EXE_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

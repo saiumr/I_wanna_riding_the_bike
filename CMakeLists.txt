@@ -7,6 +7,10 @@ set(I_wanna_riding_the_bike_VERSION_MINOR 1)
 set(SDL2_DLL_PATH ${PROJECT_SOURCE_DIR}/dependence/SDL2_64/bin/SDL2.dll)
 set(SDL2_IMAGE_DLL_PATH ${PROJECT_SOURCE_DIR}/dependence/SDL2_image_64/bin/SDL2_image.dll)
 
+macro(copy_common_resources)
+    file(COPY ${COMMON_RESOURCES_DIRS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endmacro()
+
 #SDL2 and SDL2 libraries
 include(cmake/sdl2-config.cmake)
 include(cmake/sdl2_image-config.cmake)

@@ -8,12 +8,14 @@ int main(int argc, char** argv){
     SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Window* window = SDL_CreateWindow("test UI_Image", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400, SDL_WINDOW_SHOWN);
     SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
+    UI_Init(render);
     bool isquit = false;
     SDL_Event event;
     SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
 
-    UI_Image* image = UI_CreateImage(render, "resources/image.bmp");
-    image->basicinfo.table.pMouseMotion = mouseDrag;
+    //break point
+    UI_Image* image = UI_CreateImage("resources/image.bmp", NULL);
+    UI_SetMouseMotionEvent(image, mouseDrag);
     UI_MoveItem(image, 200, 200);
 
     SDL_Size size = UI_GetSize(image);
@@ -34,11 +36,12 @@ int main(int argc, char** argv){
             size.h+=2;
         }
         UI_SetSize(image, size.w, size.h);
-        UI_DrawImage(render, image);
+        UI_DrawImage(image);
         SDL_RenderPresent(render);
         SDL_Delay(60);
     }
     UI_DestroyImage(image);
+    UI_Quit();
     SDL_Quit();
     return 0;
 }

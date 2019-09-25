@@ -6,8 +6,10 @@ include_directories(../include)
 #add_executable(tbutton.test ${SRC} ${COMMON_SRC_DIRS}/SDL_FontCache.c ../src/UI.c)
 add_executable(tbutton.test tbutton.c ${COMMON_SRC_FILES} ../src/UI.c)
 add_executable(timage.test timage.c ${COMMON_SRC_FILES} ../src/UI.c)
+add_executable(tLinkList.test tLinkList.c ${COMMON_SRC_FILES} ../src/UI.c)
 target_link_libraries(tbutton.test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 target_link_libraries(timage.test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(tLinkList.test ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     add_custom_command(TARGET tbutton.test POST_BUILD

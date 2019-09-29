@@ -31,6 +31,8 @@ void _trigItemEventClick(SDL_Event* event, UI_Widget item){
         info->table.pClick.user_event(event, item);
     if(info->table.pClick.default_event)
         info->table.pClick.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventClick(event, info->info.parent);
 }
 void _trigItemEventMouseDown(SDL_Event* event, UI_Widget item){
     UI_BasicUIInfo* info = (UI_BasicUIInfo*)item;
@@ -38,6 +40,8 @@ void _trigItemEventMouseDown(SDL_Event* event, UI_Widget item){
         info->table.pMouseDown.user_event(event, item);
     if(info->table.pMouseDown.default_event)
         info->table.pMouseDown.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventMouseDown(event, info->info.parent);
 }
 void _trigItemEventMouseRelease(SDL_Event* event, UI_Widget item){
     UI_BasicUIInfo* info = (UI_BasicUIInfo*)item;
@@ -45,6 +49,8 @@ void _trigItemEventMouseRelease(SDL_Event* event, UI_Widget item){
         info->table.pMouseRelease.user_event(event, item);
     if(info->table.pMouseRelease.default_event)
         info->table.pMouseRelease.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventMouseRelease(event, info->info.parent);
 }
 void _trigItemEventMouseMotion(SDL_Event* event, UI_Widget item){
     UI_BasicUIInfo* info = (UI_BasicUIInfo*)item;
@@ -52,6 +58,8 @@ void _trigItemEventMouseMotion(SDL_Event* event, UI_Widget item){
         info->table.pMouseMotion.user_event(event, item);
     if(info->table.pMouseMotion.default_event)
         info->table.pMouseMotion.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventMouseMotion(event, info->info.parent);
 }
 void _trigItemEventKeyDown(SDL_Event* event, UI_Widget item){
     UI_BasicUIInfo* info = (UI_BasicUIInfo*)item;
@@ -59,6 +67,8 @@ void _trigItemEventKeyDown(SDL_Event* event, UI_Widget item){
         info->table.pKeyDown.user_event(event, item);
     if(info->table.pKeyDown.default_event)
         info->table.pKeyDown.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventKeyDown(event, info->info.parent);
 }
 void _trigItemEventKeyRelease(SDL_Event* event, UI_Widget item){
     UI_BasicUIInfo* info = (UI_BasicUIInfo*)item;
@@ -66,6 +76,8 @@ void _trigItemEventKeyRelease(SDL_Event* event, UI_Widget item){
         info->table.pKeyRelease.user_event(event, item);
     if(info->table.pKeyRelease.default_event)
         info->table.pKeyRelease.default_event(event, item);
+    if(info->table.bubble && info->info.parent)
+        _trigItemEventKeyRelease(event, info->info.parent);
 }
 
 void _eventDeliver(SDL_Event* event, UI_Widget item){
@@ -279,7 +291,8 @@ void UI_ContainerAddChild(UI_Widget container, UI_BasicInfo child){
         realloc(continfo->children, sizeof(continfo->children)*(continfo->size+CONTAINER_INC_NUM));
         continfo->size += CONTAINER_INC_NUM;
     }
-    //TODO这里采用链表的方式来完成，需要改写这里的代码了
+    //TODO 没有进行单元测试
+    LinkList_Add(continfo->children, child);
     //continfo->children[continfo->num++] = child;
 }
 
@@ -346,6 +359,7 @@ inline void UI_DestroyContainer(UI_Widget container){
 //TODO 这里的函数还没有完成
 void UI_StorageAddComponent(UI_Widget item){}
 
+//TODO 默认的时间函数还需要修改
 void UI_DAKER_MOUSEDOWN_FUNC(SDL_Event* event, UI_Widget item){
     if(UI_GetVisiable(item) == false)
         return ;

@@ -61,6 +61,7 @@ typedef struct{
     Widget_Type type;   /**< 组件的种类*/
 }UI_BasicInfo;
 
+
 typedef UI_BasicInfo ElemType;
 
 /**
@@ -74,13 +75,6 @@ struct _LinkList{
 };
 
 typedef struct _LinkList LinkList;
-
-typedef struct{
-    UI_BasicInfo    info;       /**< 基本信息*/
-    LinkList*       children;   /**< 子节点*/
-    Uint32          size;       /**< 总容量*/
-    Uint32          num;        /**< 子节点个数*/
-}UI_BasicContainerInfo;
 
 /**
  * @brief 事件结构体
@@ -122,6 +116,13 @@ typedef struct{
     Uint8       ypadding;   /**< y方向上文字到边界的间距*/
     Uint8       xpadding;   /**< x方向上文字到边界的间距*/
 }UI_DisplayInfo;
+
+typedef struct{
+    UI_BasicUIInfo    info;       /**< 基本信息*/
+    LinkList*       children;   /**< 子节点*/
+    Uint32          size;       /**< 总容量*/
+    Uint32          num;        /**< 子节点个数*/
+}UI_BasicContainerInfo;
 
 /**
  * @brief 按钮UI的结构体
@@ -202,7 +203,6 @@ void UI_ContainerAddChild(UI_Widget container, UI_BasicInfo child);
 
 void UI_DestroyContainer(UI_Widget container);
 
-//TODO 由于现在使用的是渲染树来进行事件传递，所以这些函数里面要添加对bubble属性的判断，以及向父节点发送事件的代码了
 //item event trigger functions
 void _trigItemEventClick(SDL_Event*, UI_Widget item);
 void _trigItemEventMouseDown(SDL_Event*, UI_Widget item);

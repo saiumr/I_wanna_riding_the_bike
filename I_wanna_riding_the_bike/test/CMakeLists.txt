@@ -7,6 +7,7 @@ endmacro()
 
 add_test(ttest.c)
 add_test(tlog.c ${COMMON_SRC_DIRS}/log.c)
+add_test(tmmath.c ${COMMON_SRC_DIRS}/mmath.c)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     add_custom_command(TARGET tlog.test POST_BUILD
@@ -18,3 +19,4 @@ endif()
 
 include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(tlog.test ${SDL2_LIBRARIES})
+target_link_libraries(tmmath.test ${SDL2_LIBRARIES})

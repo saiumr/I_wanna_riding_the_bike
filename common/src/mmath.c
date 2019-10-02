@@ -1,6 +1,11 @@
 #include "mmath.h"
 #include <stdio.h>
 
+SDL_Vector  Vec_CreateVec(const float x1, const float y1, const float x2, const float y2){
+    SDL_Vector ret = {x1-x2, y1-y2};
+    return ret;
+}
+
 inline SDL_Vector Vec_Add(const SDL_Vector* v1, const SDL_Vector* v2){
     SDL_Vector ret = {v1->x+v2->x, v1->y+v2->y};
     return ret;
@@ -48,10 +53,26 @@ float Vec_GetAngle(const SDL_Vector* v1, const SDL_Vector* v2){
     return acos(Vec_Dot(&e1, &e2));
 }
 
+SDL_Vector Vec_Rotate(SDL_Vector* v, float degree){
+    float radian = Degree2Radian(degree);
+    SDL_Vector ret = {cosf(radian)*v->x-sinf(radian)*v->y, sinf(radian)*v->x+cosf(radian)*v->y};
+    return ret;
+}
+
+void Vec_RotateSelf(SDL_Vector* v, float degree){
+    float radian = Degree2Radian(degree);
+    v->x = cosf(radian)*v->x-sinf(radian)*v->y;
+    v->y = sinf(radian)*v->x+cosf(radian)*v->y;
+}
+
 inline float Degree2Radian(float degree){
     return degree*M_PI/180.0f;
 }
 
 inline float Radian2Degree(float radian){
     return radian*180.0f/M_PI;
+}
+
+inline float GetDistance(float x1, float y1, float x2, float y2){
+    return sqrtf((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 }

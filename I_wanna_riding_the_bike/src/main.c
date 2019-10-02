@@ -21,7 +21,6 @@
 #define WIN_HEIGHT  800
 #define FPS         60
 #define DELAY_TIME  1000.0f/FPS
-#define PI          3.1415926
 
 int main(int argc, char** argv){
     float angle = 0;
@@ -65,7 +64,7 @@ int main(int argc, char** argv){
             if(event.type == SDL_QUIT)
                 isquit = true;
         }
-        float radian = angle*PI/180;
+        float radian = angle*M_PI/180;
         SDL_Rect rect = dstrect;
         for(int i=0;i<WIN_WIDTH/dstrect.w;i++)
             for(int j=0;j<WIN_HEIGHT/dstrect.h;j++){

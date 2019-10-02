@@ -288,7 +288,7 @@ void UI_ContainerAddChild(UI_Widget container, UI_BasicInfo child){
 
     //malloc new content to container
     if(continfo->num >= continfo->size){
-        realloc(continfo->children, sizeof(continfo->children)*(continfo->size+CONTAINER_INC_NUM));
+        realloc(continfo->children, sizeof(LinkList)*(continfo->size+CONTAINER_INC_NUM));
         continfo->size += CONTAINER_INC_NUM;
     }
     //TODO 没有进行单元测试

@@ -12,6 +12,8 @@
 #define __UNITTEST_H__
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+#define ESP 0.0001
 
 static unsigned int __unittest_success_num = 0;
 static unsigned int __unittest_totle = 0;
@@ -22,10 +24,31 @@ static unsigned int __unittest_totle = 0;
 #define ADD_TEST_TRUE(name, exp, result) \
 __unittest_totle++;\
 if(exp==result){    \
-    printf("[%s]: expression 「%s==%s」    test success\t\t✔️\n", name, #exp, #result);    \
+    printf("[%s]: <expression> 「%s==%s」    test success\t\t✔️\n", name, #exp, #result);    \
     __unittest_success_num++;   \
 }else{  \
-    printf("[%s]: expression 「%s==%s」    test failed\t\t❌\n", name, #exp, #result); \
+    printf("[%s]: <expression> 「%s==%s」    test failed\t\t❌\n", name, #exp, #result); \
+}
+
+/**
+ * @brief 用于判断任意的结构在内存上是否相等
+ */
+#define ADD_TEST_EQUALOBJ(name, obj1, obj2) \
+__unittest_totle++;\
+if(memcmp(&obj1, &obj2, sizeof(obj1))==0){    \
+    printf("[%s]: <object> 「%s==%s」    test success\t\t✔️\n", name, #obj1, #obj2);    \
+    __unittest_success_num++;   \
+}else{  \
+    printf("[%s]: <object> 「%s==%s」    test failed\t\t❌\n", name, #obj1, #obj2); \
+}
+
+#define ADD_TEST_FALSEF(name, exp, result) \
+__unittest_totle++;\
+if(fabs(exp, result)>ESP){    \
+    printf("[%s]: <expression> 「%s!=%s」    test success\t\t✔️️️️\n", name, #exp, result);    \
+    __unittest_success_num++;   \
+}else{  \
+    printf("[%s]: <expression> 「%s!=%s」    test failed\t\t❌\n", name, #exp, result); \
 }
 
 /**
@@ -34,10 +57,22 @@ if(exp==result){    \
 #define ADD_TEST_FALSE(name, exp, result) \
 __unittest_totle++;\
 if(exp!=result){    \
-    printf("[%s]: expression 「%s!=%s」    test success\t\t✔️️️️\n", name, #exp, result);    \
+    printf("[%s]: <expression> 「%s!=%s」    test success\t\t✔️️️️\n", name, #exp, result);    \
     __unittest_success_num++;   \
 }else{  \
-    printf("[%s]: expression 「%s!=%s」    test failed\t\t❌\n", name, #exp, result); \
+    printf("[%s]: <expression> 「%s!=%s」    test failed\t\t❌\n", name, #exp, result); \
+}
+
+/**
+ * @brief 用于判断浮点数表达式exp和result是否不等
+ */
+#define ADD_TEST_FALSEF(name, exp, result) \
+__unittest_totle++;\
+if(fabs(exp, result)>ESP){    \
+    printf("[%s]: <expression> 「%s!=%s」    test success\t\t✔️️️️\n", name, #exp, result);    \
+    __unittest_success_num++;   \
+}else{  \
+    printf("[%s]: <expression> 「%s!=%s」    test failed\t\t❌\n", name, #exp, result); \
 }
 
 /**
@@ -55,10 +90,10 @@ if(exp!=result){    \
     for(i=0;i<strlen(buffer);i++)\
         putchar('\b');\
     if(strcmp(buffer, result) == 0){\
-        printf("[%s]: output 「%s」    test success\t\t✔️\n", name, buffer);    \
+        printf("[%s]: <output> 「%s」    test success\t\t✔️\n", name, buffer);    \
         __unittest_success_num++;   \
     }else{\
-        printf("[%s]: output 「%s」    test failed\t\t❌\n", name, buffer); \
+        printf("[%s]: <output> 「%s」    test failed\t\t❌\n", name, buffer); \
     }\
     fflush(stdout);\
 }

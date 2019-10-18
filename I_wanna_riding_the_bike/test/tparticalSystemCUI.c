@@ -41,7 +41,7 @@ int main(int argc, char** argv){
 
     for(int i=0;i<world.partical_num;i++)
         world.particals[i].isdead = true;
-    PS_Partical* partical = _PS_GetNextUndeadPartical(&world, &idx);
+    _PS_Partical* partical = _PS_GetNextUndeadPartical(&world, &idx);
     ADD_TEST_TRUE("GetNextUndeadPartical", partical, NULL);
     world.particals[4].isdead = false;
     world.particals[5].isdead = false;

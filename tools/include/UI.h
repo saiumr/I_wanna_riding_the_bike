@@ -118,7 +118,7 @@ typedef struct{
 }UI_DisplayInfo;
 
 typedef struct{
-    UI_BasicUIInfo    info;       /**< 基本信息*/
+    UI_BasicUIInfo  info;       /**< 基本信息*/
     LinkList*       children;   /**< 子节点*/
     Uint32          size;       /**< 总容量*/
     Uint32          num;        /**< 子节点个数*/

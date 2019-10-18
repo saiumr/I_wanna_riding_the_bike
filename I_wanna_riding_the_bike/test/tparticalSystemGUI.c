@@ -43,13 +43,32 @@ int main(int argc, char** argv){
             if(event.type == SDL_QUIT)
                 isquit = true;
             #ifdef TEST_ALL
-            if(event.type == SDL_KEYDOWN)
-                if(event.key.keysym.sym == SDLK_SPACE)
-                    PS_Explode(&world, explodecolor, explodePositon, 100);
+            if(event.type == SDL_KEYDOWN){
+                switch(event.key.keysym.sym){
+                    case SDLK_SPACE:
+                        PS_Explode(&world, explodecolor, explodePositon, 100);
+                        break;
+                    case SDLK_d:
+                        launcher.shoot_dir = Vec_Rotate(&launcher.shoot_dir, 5);
+                        break;
+                    case SDLK_a:
+                        launcher.shoot_dir = Vec_Rotate(&launcher.shoot_dir, -5);
+                        break;
+                    case SDLK_w:
+                        launcher.partical_hp+=2;
+                        break;
+                    case SDLK_s:
+                        if(launcher.partical_hp > 0)
+                            launcher.partical_hp-=2;
+                        break;
+                }
+            }
             #endif
         }
         PS_ShootPartical(&launcher);
         PS_WorldUpdate(&world);
+        SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
+        SDL_RenderDrawLine(render, launcher.position.x, launcher.position.y, launcher.position.x+launcher.shoot_dir.x*50, launcher.position.y+launcher.shoot_dir.y*50);
         SDL_RenderPresent(render);
         SDL_Delay(30);
     }

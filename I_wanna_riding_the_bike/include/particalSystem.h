@@ -29,7 +29,6 @@
 #define PARTICAL_SINK_INC 50
 #define PARTICAL_R 5
 #define PARTICALS_PER_DEGREE 0.15
-#define NO_TIMER -1
 
 typedef struct{
     int         hp;

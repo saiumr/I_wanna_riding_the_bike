@@ -54,19 +54,48 @@ float Vec_GetAngle(const SDL_Vector* v1, const SDL_Vector* v2){
 }
 
 SDL_Vector Vec_Rotate(SDL_Vector* v, float degree){
+    if((int)degree%360 == 0)
+        return *v;
     float radian = Degree2Radian(degree);
     SDL_Vector ret = {cosf(radian)*v->x-sinf(radian)*v->y, sinf(radian)*v->x+cosf(radian)*v->y};
     return ret;
 }
 
 void Vec_RotateSelf(SDL_Vector* v, float degree){
+    if((int)degree%360 == 0)
+        return ;
     float radian = Degree2Radian(degree);
-    v->x = cosf(radian)*v->x-sinf(radian)*v->y;
-    v->y = sinf(radian)*v->x+cosf(radian)*v->y;
+    float oldx = v->x, oldy = v->y;
+    v->x = cosf(radian)*oldx-sinf(radian)*oldy;
+    v->y = sinf(radian)*oldx+cosf(radian)*oldy;
+}
+
+SDL_Point RotatePoint(SDL_Point* center, SDL_Point point, float degree){
+    if((int)degree%360 == 0)
+        return point;
+    float radian = Degree2Radian(degree);
+    int oldx = point.x, oldy = point.y;
+    point.x = (oldx-center->x)*cosf(radian)-(oldy-center->y)*sinf(radian)+center->x;
+    point.y = (oldy-center->y)*cosf(radian)+(oldx-center->x)*sinf(radian)+center->y;
+    return point;
+}
+
+void RotatePointSelf(SDL_Point* center, SDL_Point* point, float degree){
+    if((int)degree%360 == 0)
+        return;
+    float radian = Degree2Radian(degree);
+    int oldx = point->x, oldy = point->y;
+    point->x = (oldx-center->x)*cosf(radian)-(oldy-center->y)*sinf(radian)+center->x;
+    point->y = (oldy-center->y)*cosf(radian)+(oldx-center->x)*sinf(radian)+center->y;
+}
+
+void RotatePointGroup(SDL_Point* center, SDL_Point* points, int num, float degree){
+    for(int i=0;i<num;i++)
+        RotatePointSelf(center, &points[i], degree);
 }
 
 inline float Degree2Radian(float degree){
-    return degree*M_PI/180.0f;
+    return degree*M_PI/180.0;
 }
 
 inline float Radian2Degree(float radian){

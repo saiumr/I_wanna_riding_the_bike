@@ -17,16 +17,13 @@ float       Vec_Dot(const SDL_Vector* v1, const SDL_Vector* v2);
 SDL_Vector  Vec_Normalize(const SDL_Vector* v);
 void        Vec_NormalizeSelf(SDL_Vector* v); 
 float       Vec_GetLen(const SDL_Vector* v);
-/**
- * @brief 获得两个向量的夹角
- * 
- * @param v1 
- * @param v2 
- * @return float 返回弧度制夹角
- */
 float       Vec_GetAngle(const SDL_Vector* v1, const SDL_Vector* v2);
 SDL_Vector  Vec_Rotate(SDL_Vector* v, float degree);
 void        Vec_RotateSelf(SDL_Vector* v, float degree);
+
+void        RotatePointSelf(SDL_Point* center, SDL_Point* point, float degree);
+void        RotatePointGroup(SDL_Point* center, SDL_Point* points, int num, float degree);
+SDL_Point   RotatePoint(SDL_Point* center, SDL_Point point, float degree);
 
 float Degree2Radian(float degree);
 float Radian2Degree(float radian);

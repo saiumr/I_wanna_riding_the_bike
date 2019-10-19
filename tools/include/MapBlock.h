@@ -1,5 +1,6 @@
 #ifndef __MAPBLOCK_H__
 #define __MAPBLOCK_H__
+#include <string.h>
 #include <stdbool.h>
 #include "SDL.h"
 #include "SDL_image.h"
@@ -8,6 +9,8 @@
 #include "SDL_FontCache.h"
 #include "SDL_Draw.h"
 #include "geomentry.h"
+
+static bool RenderDebugMode = false;
 
 typedef enum{
     COLLI_RECTANGLE,
@@ -33,27 +36,61 @@ typedef struct{
 }ColliShape;
 
 typedef struct{
-    ColliShape      shape;
-    SDL_Point       pos;
-    SDL_Size        size;
-    SDL_Texture*    texture;
+    SDL_Size size;
+    SDL_Point pos;
+    double angle;
+}ObjectBasicInfo;
+
+typedef struct{
+    ColliShape*     shape;
+    ObjectBasicInfo info;
+}_basicMapBlockInfo;
+
+typedef struct{
+    _basicMapBlockInfo* _basic_info;
+    SDL_Texture*        texture;
 }MapBlock;
 
 static MapBlock ERROR_MAPBLOCK;
 static SDL_Point DEFAULT_POS = {0, 0};
 static SDL_Size DEFAULT_SIZE = {-1, -1};
 
-bool _InitBasicMapBlockInfo(SDL_Renderer* render, char* texture_path, MapBlock* block, SDL_Size size, SDL_Point pos);
-MapBlock CreateSysColliMapBlock(SDL_Renderer* render, char* texture_path, ColliType colli_type, SDL_Size size, SDL_Point pos);
-MapBlock CreateUserColliMapBlock(SDL_Renderer* render, char* texture_path, SDL_Point vertices[], unsigned int len,  SDL_Size size, SDL_Point pos);
-MapBlock CreateColliMapBlockByTemplate(SDL_Renderer* render, char* texture_path, ColliType colli_type, int colli_info[], SDL_Size size, SDL_Point pos);
+void EnableDebug();
+void DisabgleDebug();
+
+SDL_Texture* LoadTexutre(SDL_Renderer* render, char* texture_path, SDL_Size* size);
+
+void InitObjBasicInfo(ObjectBasicInfo* info, SDL_Size size, SDL_Point pos, double angle);
+ColliShape* CreateColliShape(SDL_Size size, ColliType type);
+ColliShape* CreateUserColliShape(int datas[], int data_num);
+void _freeColliShape(ColliShape* shape);
+_basicMapBlockInfo* _createSysBasicMapBlockInfo(ColliType type, ObjectBasicInfo* obj_info);
+_basicMapBlockInfo* _createUserBasicMapBlockInfo(int datas[], int data_num, ObjectBasicInfo* obj_info);
+void _freeBasicMapBlockInfo(_basicMapBlockInfo* basicinfo);
+MapBlock* CreateSysColliMapBlock(SDL_Renderer* render, char* texture_path, ColliType colli_type, ObjectBasicInfo info);
+MapBlock* CreateUserColliMapBlock(SDL_Renderer* render, char* texture_path, int colli_data[], int data_num, ObjectBasicInfo info);
+void FreeMapBlock(MapBlock* block);
+
+SDL_Point GetMapBlockPosition(MapBlock* block);
+void SetMapBlockPosition(MapBlock* block, int x, int y);
+SDL_Size GetMapBlockSize(MapBlock* block);
+void ResizeMapBlock(MapBlock* block, int w, int h);
+void RotateMapBlock(MapBlock* block, double angle);
+double GetMapBlockAngle(MapBlock* block);
+ColliShape* GetMapBlockColliShape(MapBlock* block);
 ColliType GetColliType(ColliShape* shape);
-ColliShape GetColliShape(MapBlock* block);
 unsigned int GetColliDataNum(ColliShape* shape);
-void GetUserColliData(ColliShape* shape, SDL_Point ret_data[]);
+
 SDL_Rect GetRectangleColliData(ColliShape* shape);
 SDL_Circle GetCircleColliData(ColliShape* shape);
+void GetUserColliData(ColliShape* shape, SDL_Point ret_data[]);
+void GetTriangleColliData(ColliShape* shape, SDL_Point ret_data[]);
+
 void Points2IntArray(SDL_Point points[], int point_num, int ret_arrya[]);
 void Rect2IntArray(SDL_Rect rect, int ret_arrya[]);
 void Circle2IntArray(SDL_Circle circle, int ret_arrya[]);
+
+void DrawMapBlock(SDL_Renderer* render, MapBlock* block);
+void DrawColliShape(SDL_Renderer* render, ColliShape* shape, SDL_Point offset, double angle, SDL_Point* center, SDL_Color* color);
+
 #endif

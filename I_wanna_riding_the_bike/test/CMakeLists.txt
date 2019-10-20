@@ -10,7 +10,6 @@ add_test(tlog.c ${COMMON_SRC_DIRS}/log.c)
 add_test(tmmath.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tSDL_Draw.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tparticalSystemGUI.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c ${SRCDIR}/particalSystem.c)
-add_test(tparticalSystemCUI.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c ${SRCDIR}/particalSystem.c)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     add_custom_command(TARGET tlog.test POST_BUILD
@@ -26,4 +25,3 @@ target_link_libraries(tlog.test ${SDL2_LIBRARIES})
 target_link_libraries(tmmath.test ${SDL2_LIBRARIES})
 target_link_libraries(tSDL_Draw.test ${SDL2_LIBRARIES})
 target_link_libraries(tparticalSystemGUI.test ${SDL2_LIBRARIES})
-target_link_libraries(tparticalSystemCUI.test ${SDL2_LIBRARIES})

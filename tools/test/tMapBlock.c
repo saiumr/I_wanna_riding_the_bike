@@ -14,7 +14,8 @@ int main(int argc, char** argv){
     bool isquit = false;
 
     ObjectBasicInfo rectinfo = {DEFAULT_SIZE, DEFAULT_POS, 30};
-    MapBlock* rectblock = CreateSysColliMapBlock(render, "resources/image.bmp", COLLI_RECTANGLE, rectinfo);
+    MapBlock* rectblock = CreateSysColliMapBlock(render, "resources/image.bmp", COLLI_TRIANGLE, rectinfo);
+    ResizeMapBlock(rectblock, 100, 100);
 
     ObjectBasicInfo userinfo = {DEFAULT_SIZE, {200, 200}, 60};
     SDL_Point points[]={
@@ -25,6 +26,7 @@ int main(int argc, char** argv){
     int array[6];
     Points2IntArray(points, 3, array);
     MapBlock* userblock = CreateUserColliMapBlock(render, "resources/image.bmp", array, 6, userinfo);
+    ResizeMapBlock(userblock, 100, 100);
     ADD_TEST_FALSE("rectblock is NULL?", rectblock, NULL);
     ColliShape* shape = GetMapBlockColliShape(userblock);
     ADD_TEST_TRUE("GetColliType", GetColliType(shape), COLLI_USER);

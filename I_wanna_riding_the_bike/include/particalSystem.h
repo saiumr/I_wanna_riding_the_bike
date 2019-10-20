@@ -30,13 +30,7 @@
 #define PARTICAL_R 5
 #define PARTICALS_PER_DEGREE 0.15
 
-typedef struct{
-    int         hp;
-    SDL_Vector  direct;
-    bool        isdead;
-    SDL_Color   color;
-    SDL_Pointf  position;
-}_PS_Partical;
+typedef struct __PS_Partical _PS_Partical;
 
 typedef struct{
     SDL_Vector      gravity;

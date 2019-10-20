@@ -1,5 +1,13 @@
 #include "particalSystem.h"
 
+struct __PS_Partical{
+    int         hp;
+    SDL_Vector  direct;
+    bool        isdead;
+    SDL_Color   color;
+    SDL_Pointf  position;
+};
+
 PS_World PS_CreateWorld(SDL_Vector gravity, SDL_Renderer* render){
     srand((unsigned)time(NULL));
     PS_World world;

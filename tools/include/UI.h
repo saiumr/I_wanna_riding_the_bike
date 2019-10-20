@@ -9,6 +9,7 @@
 #include "SDL_FontCache.h"
 #include "header.h"
 #include "log.h"
+#include "linklist.h"
 #define CONTAINER_INC_NUM 10
 
 /**
@@ -52,7 +53,7 @@ typedef enum{
 /**
  * @brief UI组件的基本信息,所有UI组件都会包含这个结构体
  */
-typedef struct{
+typedef struct _UI_BasicInfo{
     SDL_Point   pos;    /**< 代表UI位置的点（取决于锚点）*/
     SDL_Size    size;   /**< UI的大小 */
     SDL_Pointf  anchor; /**< UI的锚点 */
@@ -60,21 +61,6 @@ typedef struct{
     UI_Widget   parent; /**< 父节点*/
     Widget_Type type;   /**< 组件的种类*/
 }UI_BasicInfo;
-
-
-typedef UI_BasicInfo ElemType;
-
-/**
- * @brief 链表(暂时只用于记录UI_BasicInfo)
- * 
- * @warn 链表中的第一个位置是不存储元素的。从第二个位置才存储元素(root->next)
- */
-struct _LinkList{
-    ElemType            data;
-    struct _LinkList*   next;
-};
-
-typedef struct _LinkList LinkList;
 
 /**
  * @brief 事件结构体
@@ -175,15 +161,6 @@ static const UI_BasicInfo _UI_DEFAULT_BASIC_INFO={
 
 void UI_StorageAddComponent(UI_Widget item);
 
-//下面是关于链表的一系列常规操作
-LinkList*   LinkList_Create();
-int         LinkList_GetLen(LinkList* root);
-void        LinkList_Add(LinkList* root, ElemType elem);
-void        LinkList_Remove(LinkList* root, ElemType elem);
-LinkList*   LinkList_Find(LinkList* root, ElemType elem);
-bool        LinkList_IsEmpty(LinkList* root);
-void        LinkList_Destroy(LinkList* root);
-
 /**
  * @brief 通过pos和anchor，计算左上角点的位置
  * 
@@ -199,7 +176,7 @@ SDL_Point _calcuTL(UI_BasicInfo* info);
  */
 void _fixButtonSize(UI_Button* button);
 
-void UI_ContainerAddChild(UI_Widget container, UI_BasicInfo child);
+void UI_ContainerAddChild(UI_Widget container, UI_BasicInfo* child);
 
 void UI_DestroyContainer(UI_Widget container);
 

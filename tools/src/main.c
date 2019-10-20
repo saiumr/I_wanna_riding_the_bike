@@ -5,7 +5,7 @@
 #define DELAY_TIME 10
 
 int main(int argc, char** argv){
-    setLogLevel(LOG_INFO);
+    setLogLevel(LOG_ERROR);
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_Window* window = SDL_CreateWindow("MapEditor v0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
@@ -19,6 +19,8 @@ int main(int argc, char** argv){
         log_error("render can't be create");
         return 2;
     }
+
+    SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 
     SDL_Event event;
     bool isquit = false;

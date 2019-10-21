@@ -1,63 +1,98 @@
 #include "linklist.h"
 
-LinkList* LinkList_Create(){
-    LinkList* root = (LinkList*)malloc(sizeof(LinkList));
-    if(root == NULL)
-        perror("memory not enough");
-    else
-        root->next = NULL;
-    return root;
+LinkList LinkList_Create(){
+    return &EmptyLinkList;
 }
 
-void LinkList_Add(LinkList* root, ElemType elem){
-    LinkList* node = root;
-    while(node->next!=NULL)
-        node = node->next;
-    LinkList* newnode = (LinkList*)malloc(sizeof(LinkList));
-    newnode->data = elem;
-    newnode->next = NULL;
-    node->next = newnode;
+void LinkList_Add2Head(LinkList* root, ElemType elem){
+    if(root == NULL || *root == NULL){
+        perror("linklist is not init"); 
+        return;
+    }
+    if((*root) == &EmptyLinkList){
+        *root = (LinkList)malloc(sizeof(struct _LinkList));
+        if(*root == NULL){
+            perror("<LinkList_Add>：memory not enough");
+            *root = &EmptyLinkList;
+        }else{
+            (*root)->data = elem;
+            (*root)->next = NULL;
+        }
+        return;
+
+    }
+    LinkList node = (LinkList)malloc(sizeof(struct _LinkList));
+    node->next = *root;
+    node->data = elem;
+    *root = node;
+}
+
+void LinkList_Add2Tail(LinkList* root, ElemType elem){
+    if(root == NULL || *root == NULL){
+        perror("linklist is not init"); 
+        return;
+    }
+    if(*root == &EmptyLinkList){
+        *root = (LinkList)malloc(sizeof(struct _LinkList));
+        if(*root == NULL){
+            perror("<LinkList_Add>：memory not enough");
+            *root = &EmptyLinkList;
+        }else{
+            (*root)->next = NULL;
+            (*root)->data = elem;
+        }
+    }else{
+        LinkList head = *root;
+        while(head->next!=NULL)
+            head = head->next;
+        LinkList newnode = (LinkList)malloc(sizeof(struct _LinkList));
+        newnode->data = elem;
+        newnode->next = NULL;
+        head->next = newnode;
+    }
+
 }
 
 inline bool LinkList_IsEmpty(LinkList* root){
-    return root->next?false:true;
+    if(root == NULL || *root == NULL || *root == &EmptyLinkList)
+        return true;
+    return false;
 }
 
 int LinkList_GetLen(LinkList* root){
-    LinkList* node = root->next;
-    int num = 0;
-    while(node != NULL){
-        node = node->next;
+    unsigned int num = 0;
+    LinkList head = *root;
+    if(head != NULL && head != &EmptyLinkList){
         num++;
+        while(head->next!=NULL){
+            head = head->next;
+            num++;
+        }
     }
     return num;
 }
 
 void LinkList_Remove(LinkList* root, ElemType elem){
-    LinkList *rear = root,
-             *prev = rear;
-    while(memcmp(&rear->data, &elem, sizeof(elem))!=0){
+    if(root == NULL || *root == NULL || LinkList_IsEmpty(root) == true)
+        return ;
+    LinkList rear = *root,
+             prev = rear;
+    while(rear->data != elem && rear->next!=NULL){
         prev = rear;
         rear = rear->next;
     }
     if(rear == NULL)
         return;
-    LinkList* node = rear;
+    LinkList node = rear;
     rear = rear->next;
     free(node);
     prev->next = rear;
 }
 
-LinkList* LinkList_Find(LinkList* root, ElemType elem){
-    LinkList* node = root->next;
-    while(memcmp(&node->data, &elem, sizeof(elem))!=0 && node!=NULL)
-        node = node->next;
-    return node;
-}
-
 void LinkList_Destroy(LinkList* root){
-    if(root->next != NULL)
-        LinkList_Destroy(root->next);
-    free(root);
-    root = NULL;
+    if(root != NULL && *root != NULL && *root != &EmptyLinkList){
+        LinkList_Destroy(&((*root)->next));
+        free(*root);
+        *root = NULL;
+    }
 }

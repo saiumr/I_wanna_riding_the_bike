@@ -39,6 +39,7 @@ typedef struct{
 
 typedef struct{
     _basicMapBlockInfo* _basic_info;
+    unsigned int        lightness;
     SDL_Texture*        texture;
 }MapBlock;
 
@@ -72,6 +73,7 @@ void         RotateMapBlock(MapBlock* block, double angle);
 ColliShape*  GetMapBlockColliShape(MapBlock* block);
 ColliType    GetColliType(ColliShape* shape);
 unsigned int GetColliDataNum(ColliShape* shape);
+unsigned int GetMapBlockLightness(MapBlock* block);
 
 SDL_Rect    GetRectangleColliData(ColliShape* shape);
 SDL_Circle  GetCircleColliData(ColliShape* shape);

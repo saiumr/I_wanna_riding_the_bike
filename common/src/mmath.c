@@ -6,6 +6,11 @@ SDL_Vector  Vec_CreateVec(const float x1, const float y1, const float x2, const 
     return ret;
 }
 
+SDL_Vector  Vec_CreateVecByPoints(const SDL_Point* p1, const SDL_Point* p2){
+    SDL_Vector ret = {p1->x-p2->x, p1->y-p2->y};
+    return ret;
+}
+
 inline SDL_Vector Vec_Add(const SDL_Vector* v1, const SDL_Vector* v2){
     SDL_Vector ret = {v1->x+v2->x, v1->y+v2->y};
     return ret;
@@ -29,6 +34,10 @@ inline SDL_Vector Vec_Div(const SDL_Vector* v1, const SDL_Vector* v2){
 
 inline float Vec_Dot(const SDL_Vector* v1, const SDL_Vector* v2){
     return v1->x*v2->x+v1->y*v2->y;
+}
+
+inline float Vec_Cross(const SDL_Vector* v1, const SDL_Vector* v2){
+    return v1->x*v2->y-v2->x*v1->y;
 }
 
 inline SDL_Vector  Vec_Normalize(const SDL_Vector* v){
@@ -104,4 +113,24 @@ inline float Radian2Degree(float radian){
 
 inline float GetDistance(float x1, float y1, float x2, float y2){
     return sqrtf((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+
+inline float minf(float a, float b){
+    return max(a, b);
+}
+
+inline float maxf(float a, float b){
+    return max(a, b);
+}
+
+inline double min(double a, double b){
+    if(a>b)
+        return a;
+    return b;
+}
+
+inline double max(double a, double b){
+    if(a>b)
+        return a;
+    return b;
 }

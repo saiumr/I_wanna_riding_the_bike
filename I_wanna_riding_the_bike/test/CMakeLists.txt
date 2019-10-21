@@ -7,6 +7,7 @@ set(SRCDIR ../src)
 
 add_test(ttest.c)
 add_test(tlog.c ${COMMON_SRC_DIRS}/log.c)
+add_test(tLinkList.c ${COMMON_SRC_DIRS}/linklist.c)
 add_test(tmmath.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tSDL_Draw.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tparticalSystemGUI.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c ${SRCDIR}/particalSystem.c)

@@ -10,12 +10,14 @@ int main(int argc, char** argv){
 
     SDL_Window* window = SDL_CreateWindow("test MapBlock", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
     SDL_Renderer* render = SDL_CreateRenderer(window, -1, 0);
+    SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
     SDL_Event event;
     bool isquit = false;
 
     ObjectBasicInfo rectinfo = {DEFAULT_SIZE, DEFAULT_POS, 30};
     MapBlock* rectblock = CreateSysColliMapBlock(render, "resources/image.bmp", COLLI_TRIANGLE, rectinfo);
     ResizeMapBlock(rectblock, 100, 100);
+    rectblock->lightness = 100;
 
     ObjectBasicInfo userinfo = {DEFAULT_SIZE, {200, 200}, 60};
     SDL_Point points[]={

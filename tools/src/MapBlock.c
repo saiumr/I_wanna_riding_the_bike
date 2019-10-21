@@ -42,6 +42,7 @@ MapBlock* CreateSysColliMapBlock(SDL_Renderer* render, char* texture_path, Colli
         FreeMapBlock(block);
         return NULL;
     }
+    block->lightness = 255;
     return block;
 }
 
@@ -123,6 +124,7 @@ MapBlock* CreateUserColliMapBlock(SDL_Renderer* render, char* texture_path, int 
         FreeMapBlock(block);
         return NULL;
     }
+    block->lightness = 255;
     return block;
 }
 
@@ -202,11 +204,21 @@ void DrawMapBlock(SDL_Renderer* render, MapBlock* block){
     SDL_Size s = GetMapBlockSize(block);
     SDL_Rect dest = {p.x, p.y, s.w, s.h};
     SDL_RenderCopyEx(render, block->texture, NULL, &dest, GetMapBlockAngle(block), NULL, SDL_FLIP_NONE);
+    SDL_SetRenderDrawColor(render, 255, 255, 255, 255-block->lightness);
+    SDL_Point pos = GetMapBlockPosition(block);
+    SDL_Size size = GetMapBlockSize(block);
+    SDL_Rect rect = {pos.x, pos.y, size.w, size.h};
+    //TODO 这里替换成SDL_RenderFillRectEX()
+    SDL_RenderFillRect(render, &rect);
     if(RenderDebugMode){
         SDL_Color color = {0, 255, 0, 255};
         SDL_Point center = {dest.x+dest.w/2, dest.y+dest.h/2};
         DrawColliShape(render, GetMapBlockColliShape(block), GetMapBlockPosition(block), GetMapBlockAngle(block), &center, &color);
     }
+}
+
+unsigned int GetMapBlockLightness(MapBlock* block){
+    return block->lightness;
 }
 
 void DrawColliShape(SDL_Renderer* render, ColliShape* shape, SDL_Point offset, double angle, SDL_Point* center, SDL_Color* color){

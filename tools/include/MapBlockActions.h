@@ -71,4 +71,8 @@ void MapBlockScaleActionByCircleArea(MapBlockActionGroup* action, MapBlock* bloc
 void FreeMapBlockActionGroup(MapBlockActionGroup* action);
 void DeleteAction(Action* action);
 
+//TODO没写完
+void DrawMapBlockAction(MapBlockActionGroup* action);
+void MapBlockActionDealEvent(MapBlockActionGroup* action);
+
 #endif

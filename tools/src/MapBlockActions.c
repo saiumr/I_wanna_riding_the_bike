@@ -1,5 +1,4 @@
 #include "MapBlockActions.h"
-//TODO 实现.h中的函数
 MapBlockActionGroup* CreateMapBlockActionGroup(MapBlock* block){
     MapBlockActionGroup* group = (MapBlockActionGroup*)malloc(sizeof(MapBlockActionGroup));
     group->block = (MapBlock*)malloc(sizeof(MapBlock));

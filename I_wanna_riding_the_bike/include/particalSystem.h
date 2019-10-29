@@ -15,7 +15,7 @@
  *  5. 使用完之后不要忘记PS_DestroyWorld()和PS_DestroyLauncher()
  */
 
-//TODO 这个粒子系统的效率很低，后期要想办法优化
+//Warning: 这个粒子系统的效率很低，后期要想办法优化
 #ifndef __PARTICALSYSTEM_H__
 #define __PARTICALSYSTEM_H__
 

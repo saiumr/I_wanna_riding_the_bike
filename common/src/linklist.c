@@ -4,7 +4,7 @@ LinkList LinkList_Create(){
     return &EmptyLinkList;
 }
 
-void LinkList_Add2Head(LinkList* root, ElemType elem){
+void LinkList_Add2Head(LinkList* root, ElemType elem, unsigned int sizeof_elem){
     if(root == NULL || *root == NULL){
         perror("linklist is not init"); 
         return;
@@ -15,19 +15,21 @@ void LinkList_Add2Head(LinkList* root, ElemType elem){
             perror("<LinkList_Add>：memory not enough");
             *root = &EmptyLinkList;
         }else{
-            (*root)->data = elem;
+            (*root)->data = malloc(sizeof_elem);
+            memcpy((*root)->data, elem, sizeof_elem);
             (*root)->next = NULL;
         }
         return;
 
     }
     LinkList node = (LinkList)malloc(sizeof(struct _LinkList));
+    node->data = malloc(sizeof_elem);
+    memcpy(node->data, elem, sizeof_elem);
     node->next = *root;
-    node->data = elem;
     *root = node;
 }
 
-void LinkList_Add2Tail(LinkList* root, ElemType elem){
+void LinkList_Add2Tail(LinkList* root, ElemType elem, unsigned int sizeof_elem){
     if(root == NULL || *root == NULL){
         perror("linklist is not init"); 
         return;
@@ -39,14 +41,16 @@ void LinkList_Add2Tail(LinkList* root, ElemType elem){
             *root = &EmptyLinkList;
         }else{
             (*root)->next = NULL;
-            (*root)->data = elem;
+            (*root)->data = malloc(sizeof_elem);
+            memcpy((*root)->data, elem, sizeof_elem);
         }
     }else{
         LinkList head = *root;
         while(head->next!=NULL)
             head = head->next;
         LinkList newnode = (LinkList)malloc(sizeof(struct _LinkList));
-        newnode->data = elem;
+        newnode->data = malloc(sizeof_elem);
+        memcpy(newnode->data, elem, sizeof_elem);
         newnode->next = NULL;
         head->next = newnode;
     }
@@ -85,6 +89,7 @@ void LinkList_Remove(LinkList* root, ElemType elem){
         return;
     LinkList node = rear;
     rear = rear->next;
+    free(node->data);
     free(node);
     prev->next = rear;
 }
@@ -92,6 +97,7 @@ void LinkList_Remove(LinkList* root, ElemType elem){
 void LinkList_Destroy(LinkList* root){
     if(root != NULL && *root != NULL && *root != &EmptyLinkList){
         LinkList_Destroy(&((*root)->next));
+        free((*root)->data);
         free(*root);
         *root = NULL;
     }

@@ -19,6 +19,10 @@ void DisabgleDebug(){
     RenderDebugMode = false;
 }
 
+ObjectBasicInfo* GetMapBlockBasicInfo(MapBlock* block){
+    return &block->_basic_info->info;
+}
+
 MapBlock* CreateSysColliMapBlock(SDL_Renderer* render, char* texture_path, ColliType colli_type, ObjectBasicInfo info){
     MapBlock* block = (MapBlock*)malloc(sizeof(MapBlock));
     block->_basic_info = NULL;

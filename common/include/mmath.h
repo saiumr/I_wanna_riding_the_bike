@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "header.h"
 #include "math.h"
+#define EPS 0.00001
 
 typedef SDL_Pointf SDL_Vector;
 

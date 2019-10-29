@@ -63,6 +63,7 @@ _basicMapBlockInfo* _createSysBasicMapBlockInfo(ColliType type, ObjectBasicInfo*
 _basicMapBlockInfo* _createUserBasicMapBlockInfo(int datas[], int data_num, ObjectBasicInfo* obj_info);
 void                _freeBasicMapBlockInfo(_basicMapBlockInfo* basicinfo);
 
+ObjectBasicInfo* GetMapBlockBasicInfo(MapBlock* block);
 SDL_Point    GetMapBlockPosition(MapBlock* block);
 SDL_Point    GetMapBlockCenter(MapBlock* block);
 void         SetMapBlockPosition(MapBlock* block, int x, int y);

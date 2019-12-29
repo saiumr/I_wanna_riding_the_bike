@@ -7,13 +7,13 @@ set(RESOURCES_DST ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(${GAME_EXE_NAME} ${SRC} ${COMMON_SRC_FILES})
 
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-    add_custom_command(TARGET ${GAME_EXE_NAME} POST_BUILD
-        COMMAND cp ${SDL2_DLL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/SDL2.dll
-        DEPENDS ${SDL2_DLL_PATH}
-    )   
+#if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    #add_custom_command(TARGET ${GAME_EXE_NAME} POST_BUILD
+    #    COMMAND cp ${SDL2_DLL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/SDL2.dll
+    #    DEPENDS ${SDL2_DLL_PATH}
+    #)   
     #file(COPY ${SDL2_DLL_PATH} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}) #如果上面的不行，就试试这个
-endif()
+#endif()
 
 #copy sources to build folder
 file(COPY ${RESOURCES_SRC} DESTINATION ${RESOURCES_DST})

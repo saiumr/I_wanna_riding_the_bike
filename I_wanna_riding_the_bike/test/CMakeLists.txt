@@ -12,13 +12,7 @@ add_test(tmmath.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tSDL_Draw.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c)
 add_test(tparticalSystemGUI.c ${COMMON_SRC_DIRS}/SDL_Draw.c ${COMMON_SRC_DIRS}/mmath.c ${SRCDIR}/particalSystem.c)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-    add_custom_command(TARGET tlog.test POST_BUILD
-        COMMAND cp ${SDL2_DLL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/SDL2.dll
-        DEPENDS ${SDL2_DLL_PATH}
-    )
-    #file(COPY ${SDL2_DLL_PATH} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}) #如果上面的不行，就试试这个
-endif()
+#file(COPY ${SDL2_DLL_PATH} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}) #如果上面的不行，就试试这个
 
 include_directories(${PROJECT_SOURCE_DIR}/test_include ${COMMON_INCLUDE_DIRS} ../include)
 include_directories(${SDL2_INCLUDE_DIRS})

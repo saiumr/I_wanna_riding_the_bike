@@ -46,26 +46,40 @@ int main(int argc, char** argv){
     FC_LoadFont(font, render, "resources/Fangsong.ttf", 20, FC_MakeColor(255, 255, 255, 255), TTF_STYLE_NORMAL);  
     SDL_bool isquit = false;
     SDL_Event event;
+    SDL_Rect windowRect;
+    windowRect.x = 0;
+    windowRect.y = 0;
+    windowRect.w = WIN_WIDTH;
+    windowRect.h = WIN_HEIGHT;
 
     SDL_Surface* surface = IMG_Load("resources/testImage.png");
+    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0, 0));
+    SDL_Surface* surfaceBlack = IMG_Load("resources/black.png");
     if(!surface){
         log_error("image load failed");
         return IMAGE_ERROR;
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(render, surface);
+    SDL_Texture* textureBlack = SDL_CreateTextureFromSurface(render, surfaceBlack);
+    SDL_SetTextureAlphaMod(textureBlack, 20);
+    SDL_SetTextureBlendMode(textureBlack, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+
     SDL_Rect dstrect = {0, 0, surface->w*10, surface->h*10};
     SDL_FreeSurface(surface);
 
+
     while(!isquit){
         passedtime = SDL_GetTicks();
-        SDL_RenderClear(render);
+        SDL_RenderCopy(render, textureBlack, NULL, &windowRect);
         while(SDL_PollEvent(&event)){
             if(event.type == SDL_QUIT)
                 isquit = true;
         }
         float radian = angle*M_PI/180;
         SDL_Rect rect = dstrect;
+
         for(int i=0;i<WIN_WIDTH/dstrect.w;i++)
             for(int j=0;j<WIN_HEIGHT/dstrect.h;j++){
                 rect.x = dstrect.w*i+radius*cos(radian)+50;
@@ -87,4 +101,6 @@ int main(int argc, char** argv){
     FC_FreeFont(font);
     SDL_DestroyRenderer(render);
     SDL_Quit();
+
+    return 0;
 }

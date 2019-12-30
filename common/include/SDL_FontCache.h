@@ -303,7 +303,7 @@ SDL_Color FC_GetDefaultColor(FC_Font* font);
 FC_Rect FC_GetBounds(FC_Font* font, float x, float y, FC_AlignEnum align, FC_Scale scale, const char* formatted_text, ...);
 
 Uint8 FC_InRect(float x, float y, FC_Rect input_rect);
-// Given an offset (x,y) from the text draw position (the upper-left corner), returns the character position (UTF-8 index)
+// Given an offset (x,entity) from the text draw position (the upper-left corner), returns the character position (UTF-8 index)
 Uint16 FC_GetPositionFromOffset(FC_Font* font, float x, float y, int column_width, FC_AlignEnum align, const char* formatted_text, ...);
 
 // Returns the number of characters in the new wrapped text written into `result`.

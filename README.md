@@ -5,7 +5,7 @@
 ## 介绍
 以下将以对话的形式向您介绍这个有趣的小项目，这是我和一个朋友开启的第一个工程，希望我们能够成功！
 
-**VisualGMQ**: 这是我们的第一个I Wanna游戏，从被坑爹到坑别人。游戏使用C语言和SDL2,OpenAL库开发。
+**VisualGMQ**: 这是我们的第一个I Wanna游戏，从被坑爹到坑别人。游戏使用C++语言和SDL2,OpenAL库开发。
 
 **saiumr**: 他是个大佬。
 
@@ -14,3 +14,13 @@
 **saiumr**: ...实际上我没有康过什么大赛，他讲的一些nb的东西我听都没听过。over~
 
 **VisualGMQ && saiumr**: 我们想了很久，确定了没什么说的了...
+
+## 运行方法
+
+首先创建build文件夹  
+进入build文件夹  
+运行`cmake ..`,`make`  
+然后退出到根目录，如果你有python3，就使用  
+`python3 run.py`  
+如果没有就 
+`./build/I_wanna_riding_the_bike/play`

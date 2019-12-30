@@ -98,7 +98,7 @@ void PS_ShootPartical(PS_ParticalLauncher* launcher){
         }
         int randnum = rand()%(int)(2*launcher->half_degree*1000+1)-(int)launcher->half_degree*1000;
         float randdegree = randnum/1000.0f;
-        //TODO 这个地方的赋值要不要使用指针呢？放在最后的时候优化吧
+        //Improvment: 这个地方的赋值要不要使用指针呢？放在最后的时候优化吧
         partical->color = launcher->color;
         SDL_Vector direct = Vec_Rotate(&launcher->shoot_dir, randdegree);
         partical->direct = direct;

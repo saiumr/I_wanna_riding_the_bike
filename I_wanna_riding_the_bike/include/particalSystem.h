@@ -15,7 +15,7 @@
  *  5. 使用完之后不要忘记PS_DestroyWorld()和PS_DestroyLauncher()
  */
 
-//TODO 这个粒子系统的效率很低，后期要想办法优化
+//Warning: 这个粒子系统的效率很低，后期要想办法优化
 #ifndef __PARTICALSYSTEM_H__
 #define __PARTICALSYSTEM_H__
 
@@ -23,8 +23,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "SDL.h"
-#include "SDL_Draw.h"
-#include "mmath.h"
+#include "engin/mmath.h"
+#include "engin/SDL_Draw.h"
 #define WORLD_PARTICAL_INIT_NUM 100
 #define PARTICAL_SINK_INC 50
 #define PARTICAL_R 5

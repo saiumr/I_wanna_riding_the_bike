@@ -1,5 +1,7 @@
 set(COMMON_prefix ${PROJECT_SOURCE_DIR}/common)
 set(COMMON_INCLUDE_DIRS ${COMMON_prefix}/include)
 set(COMMON_SRC_DIRS ${COMMON_prefix}/src)
-aux_source_directory(${COMMON_SRC_DIRS} COMMON_SRC_FILES)
+aux_source_directory(${COMMON_SRC_DIRS} COMMON_SRC)
+aux_source_directory(${COMMON_SRC_DIRS}/engin COMMON_SRC_ENGIN)
+list(APPEND COMMON_SRC ${COMMON_SRC_ENGIN})
 set(COMMON_RESOURCES_DIRS ${COMMON_prefix}/resources)

@@ -1375,7 +1375,7 @@ void FC_ResetFontFromRendererReset(FC_Font* font, SDL_Renderer* renderer, Uint32
     if (font == NULL)
         return;
 
-    // Destroy glyph cache
+    // destroy glyph cache
     if (evType == SDL_RENDER_TARGETS_RESET) {
         int i;
         for (i = 0; i < font->glyph_cache_count; ++i)

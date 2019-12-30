@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 project(I_wanna_riding_the_bike)
 
-add_definitions("-Wall -g")
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
-set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3")
 
-SET(CMAKE_CXX_FLAGS -std=c++11)
+set(CMAKE_CXX_FLAGS -std=c++11)
+set(CMAKE_C_FLAGS -std=c99)
 set(I_wanna_riding_the_bike_VERSION_MAJOR 0)
 set(I_wanna_riding_the_bike_VERSION_MINOR 1)
 

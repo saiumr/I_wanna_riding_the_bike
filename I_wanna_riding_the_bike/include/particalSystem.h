@@ -23,8 +23,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "SDL.h"
-#include "SDL_Draw.h"
-#include "mmath.h"
+#include "engin/mmath.h"
+#include "engin/SDL_Draw.h"
 #define WORLD_PARTICAL_INIT_NUM 100
 #define PARTICAL_SINK_INC 50
 #define PARTICAL_R 5

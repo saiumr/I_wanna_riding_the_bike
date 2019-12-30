@@ -1,7 +1,5 @@
-#include "mmath.hpp"
+#include "engin/mmath.hpp"
 #include "unittest.hpp"
-#include <math.h>
-#include <stdio.h>
 #define EPS 0.00001
 #define COMPARE_FLOAT(n1, n2) fabs(n1-n2)<=EPS
 

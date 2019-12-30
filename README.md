@@ -14,3 +14,13 @@
 **saiumr**: ...实际上我没有康过什么大赛，他讲的一些nb的东西我听都没听过。over~
 
 **VisualGMQ && saiumr**: 我们想了很久，确定了没什么说的了...
+
+## 运行方法
+
+首先创建build文件夹  
+进入build文件夹  
+运行`cmake ..`,`make`  
+然后退出到根目录，如果你有python3，就使用  
+`python3 run.py`  
+如果没有就 
+`./build/I_wanna_riding_the_bike/play`

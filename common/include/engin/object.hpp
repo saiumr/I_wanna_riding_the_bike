@@ -6,7 +6,8 @@
 #define FARTRACE_OBJECT_HPP
 
 #include "mmath.hpp"
-#include "spdlog/spdlog.h"
+#include <iostream>
+using namespace std;
 
 class Object {
 public:

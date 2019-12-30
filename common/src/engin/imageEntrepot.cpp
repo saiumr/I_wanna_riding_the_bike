@@ -10,18 +10,18 @@ void ImageEntrepot::LoadImage(const string& filename){
     string image_name = GetNameFromFile(filename);
     auto it = images.find(image_name);
     if(it!=images.end())
-        spdlog::warn("{} is exists", image_name);
+        cerr<<image_name<<" is exists";
     else{
         SDL_Surface* surface = IMG_Load(filename.c_str());
         if(surface==nullptr){
-            spdlog::error("{} load failed", filename);
+            cerr<<filename<<" load failed";
             return ;
         }
         SDL_Texture* texture = SDL_CreateTextureFromSurface(Director::GetDirector()->GetRender(), surface);
         SDL_FreeSurface(surface);
         if(texture==nullptr){
             SDL_DestroyTexture(texture);
-            spdlog::error("texture {} can't create", image_name);
+            cerr<<"texture can't create";
             return;
         }
         SDL_DestroyTexture(it->second);
@@ -33,19 +33,19 @@ void ImageEntrepot::LoadImageStrict(string filename){
     string image_name = GetNameFromFile(filename);
     auto it = images.find(image_name);
     if(it!=images.end()) {
-        spdlog::error("{} is exist", filename);
+        cerr<<filename<<" is exists";
         return;
     }else{
         SDL_Surface* surface = IMG_Load(filename.c_str());
         if(surface==nullptr){
-            spdlog::error("{} load failed", filename);
+            cerr<<filename<<" load failed";
             return ;
         }
         SDL_Texture* texture = SDL_CreateTextureFromSurface(Director::GetDirector()->GetRender(), surface);
         SDL_FreeSurface(surface);
         if(texture==nullptr){
             SDL_DestroyTexture(texture);
-            spdlog::error("texture {} can't create", image_name);
+            cerr<<"texture can't create";
             return;
         }
         SDL_DestroyTexture(it->second);
@@ -64,14 +64,14 @@ void ImageEntrepot::DeleteImage(string name){
 SDL_Texture* ImageEntrepot::GetImage(string name){
     auto it = images.find(name);
     if(it==images.end()){
-        spdlog::warn("{} is not in entrepot", name);
+        cerr<<name<<" is not in entrepot";
         return nullptr;
     }
     return it->second;
 }
 
 void ImageEntrepot::PrintContent(){
-    spdlog::info("ImageEntrepot's content:");
+    cout<<"ImageEntrepot's content:";
     for(auto i : images){
         cout<<i.first<<endl;
     }

@@ -19,7 +19,7 @@ Sprite_Image* Sprite::GetImage(){
 
 void Sprite::SuitSize(){
     if(image== nullptr){
-        spdlog::warn("Sprite::SuitSize(): can't suit size because image==nullptr");
+        cerr<<"Sprite::SuitSize(): can't suit size because image==nullptr";
         return;
     }
     int w, h;

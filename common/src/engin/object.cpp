@@ -23,7 +23,7 @@ void Object::Move(int x, int y){
 
 void Object::Resize(int w, int h){
     if(w<0 || h<0){
-        spdlog::warn("Object::Resize: must w,h>=0");
+        cerr<<"Object::Resize: must w,h>=0";
         return ;
     }
     rect.w = w;
@@ -63,7 +63,7 @@ void Object::SetAnchorByPixel(float x, float y){
 
 void Object::Scale(float scale_x, float scale_y){
     if((scale_x<0 && scale_x>1) || (scale_y<0 && scale_y>1)){
-        spdlog::warn("Object::Scale: must 0<=scale_x, scale_y<=1");
+        cerr<<"Object::Scale: must 0<=scale_x, scale_y<=1";
         return ;
     }
     rect.w *= scale_x;

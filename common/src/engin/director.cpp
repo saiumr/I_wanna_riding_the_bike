@@ -4,7 +4,7 @@ Director* Director::director = nullptr;
 
 Director* Director::GetDirector(){
     if(director==nullptr){
-        spdlog::critical("no director, game destroyed!");
+        cerr<<"no director, game destroyed!";
     }
     return director;
 }
@@ -27,13 +27,13 @@ void Director::init(){
     IMG_Init(IMG_INIT_PNG|IMG_INIT_JPG);
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
     if(window == nullptr){
-        spdlog::critical("window create failed");
+        cerr<<"window create failed";
         ExitGame(WINDOW_ERROR);
         return;
     }
     render = SDL_CreateRenderer(window, -1, 0);
     if(render == nullptr){
-        spdlog::critical("render create failed");
+        cerr<<"render create failed";
         ExitGame(RENDER_ERROR);
         return;
     }
@@ -60,7 +60,7 @@ void Director::ChanegScene(Scene* scene){
         delete this->scene;
     }
     if(scene == nullptr){
-        spdlog::critical("loading scene is nullptr");
+        cerr<<"loading scene is nullptr";
         this->error_flag = SCENE_ERROR;
         return;
     }
@@ -77,7 +77,7 @@ Scene* Director::GetCurrentScene(){
 void Director::LoadImage(string filename){
     ifstream file(filename);
     if(file.fail()){
-        spdlog::error("no image loader file {}", filename);
+        cerr<<"no image loader file "<<filename;
         director->error_flag = IMAGE_ERROR;
         return;
     }

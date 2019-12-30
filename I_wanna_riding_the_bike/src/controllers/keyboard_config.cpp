@@ -17,7 +17,7 @@ KeyboardConfig::KeyboardConfig(){
 
 void KeyboardConfig::BindKey(unsigned int key, Controller::Controller_Keys controllerKeys){
     if(key_bind.find(key)==key_bind.end())
-        spdlog::warn("no {} key", key);
+        cerr<<"no key";
     else
         key_bind[key] = controllerKeys;
 }

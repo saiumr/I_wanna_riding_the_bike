@@ -7,7 +7,6 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
-#include "spdlog/spdlog.h"
 #include "director.hpp"
 #include <map>
 #include <string>

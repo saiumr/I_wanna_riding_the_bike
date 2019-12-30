@@ -23,7 +23,7 @@ else:
             for f in srcfiles:
                 if not f in dstfile:
                     shutil.copy(dll_path+f, exe_path)
-            os.system("./"+exe_full_path)
+            os.system(".\\"+exe_full_path.replace("/","\\"))
+            
     else:
         os.system("./"+exe_full_path)
-    os.system(r"echo result of play: $?")

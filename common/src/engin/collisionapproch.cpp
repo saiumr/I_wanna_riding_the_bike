@@ -21,10 +21,13 @@ bool CircleCircle(SDL_Circle c1, SDL_Circle c2){
 
 bool CircleRect(SDL_Rect rect, SDL_Circle circle){
     //TODO 这个地方打算直接用调用SAT
+    return false;
 }
 
 //TODO 未实现SAT
-bool SAT(SDL_Point poly1[], int num1, SDL_Point poly2[], int num2);
+bool SAT(SDL_Point poly1[], int num1, SDL_Point poly2[], int num2){
+    return false;
+}
 
 bool CirlePoint(SDL_Circle c, SDL_Point p){
     if(fabs(GetDistance(p.x, p.y, c.center.x, c.center.y) - c.r) <= EPS)
@@ -43,7 +46,7 @@ bool RotateRectPoint(SDL_Point vertices[], SDL_Point p){
     SDL_memcpy(newverts, vertices, sizeof(SDL_Point)*4);
     for(int i=0;i<4;i++)
         RotatePointGroup(&center, newverts, 4, degree);
-    SDL_Rect rect = {newverts[0].x, newverts[0].y, abs(newverts[2].x-newverts[0].x), abs(newverts[2].y-newverts[0].y)};
+    SDL_Rect rect = {newverts[0].x, newverts[0].y, SDL_abs(newverts[2].x-newverts[0].x), SDL_abs(newverts[2].y-newverts[0].y)};
     return RotateRectPointByAngle(rect, p, degree);
 }
 

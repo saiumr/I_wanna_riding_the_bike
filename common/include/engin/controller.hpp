@@ -6,7 +6,8 @@
 #define FARTRACE_CONTROLLER_HPP
 
 #include "SDL.h"
-#include "spdlog/spdlog.h"
+#include <iostream>
+using namespace std;
 
 class Controller {
 public:

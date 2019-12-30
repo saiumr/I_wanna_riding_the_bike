@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "spdlog/spdlog.h"
 #include "stage.hpp"
 #include "scene.hpp"
 #include "error.hpp"

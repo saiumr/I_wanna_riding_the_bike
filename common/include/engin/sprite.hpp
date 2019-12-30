@@ -6,7 +6,6 @@
 #define FARTRACE_SPRITE_HPP
 
 #include "SDL.h"
-#include "spdlog/spdlog.h"
 #include "object.hpp"
 #include "imageEntrepot.hpp"
 #include <string>

@@ -8,7 +8,7 @@ Controller* Controller::controller = nullptr;
 
 Controller* Controller::GetController(){
     if(controller==nullptr)
-        spdlog::error("no controller");
+        cerr<<"no controller";
     return controller;
 }
 

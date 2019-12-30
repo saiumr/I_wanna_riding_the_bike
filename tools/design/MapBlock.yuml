@@ -1,0 +1,12 @@
+// {type:class}
+// {direction:topDown}
+
+[<<enum>>;ColliType|COLLI_RECTANGLE;COLLI_CIRCLE;COLLI_TRIANGLE;COLLI_USER]
+[ObjectBasicInfo|size:SDL_Size;pos:SDL_Point;angle:double]
+[MapBlock|texture:SDL_Texture*]
+[__basicMapBlockInfo]
+[ColliShape|_datas:int*;_data_num:unsigned int]
+[ColliShape]_colli_type-<>[<<enum>>;ColliType]
+[MapBlock]_basic_info-<>[__basicMapBlockInfo]
+[__basicMapBlockInfo]shape*-<>[ColliShape]
+[__basicMapBlockInfo]info-<>[ObjectBasicInfo]

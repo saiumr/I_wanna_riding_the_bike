@@ -6,6 +6,10 @@
 #define Assert(exp) assert(exp)
 //optional: #define Assert(exp) SDL_assert(exp)
 
+//定义real是实数，因为可能需要修改精度变成double
+typedef float real;
+
+
 typedef struct{
     int w;
     int h;

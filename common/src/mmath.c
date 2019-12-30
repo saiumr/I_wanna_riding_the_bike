@@ -99,6 +99,8 @@ void RotatePointSelf(SDL_Point* center, SDL_Point* point, float degree){
 }
 
 void RotatePointGroup(SDL_Point* center, SDL_Point* points, int num, float degree){
+    if(center == NULL)
+        return;
     for(int i=0;i<num;i++)
         RotatePointSelf(center, &points[i], degree);
 }

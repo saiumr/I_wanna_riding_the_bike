@@ -84,3 +84,62 @@ void SDL_RenderFillRectEx(SDL_Renderer* render, SDL_Rect* rect, SDL_Point* cente
 void SDL_RenderFillPolygon(SDL_Renderer* render, SDL_Point points[]){
 
 }
+
+void SDL_RenderDrawWidthLine(SDL_Renderer* render, SDL_Point* p1, SDL_Point* p2, int width){
+    SDL_Vector norm;
+    if(p1->x == p2->x){
+        norm.x = 1;
+        norm.y = 0;
+    }else if(p1->y == p2->y){
+        norm.x = 0;
+        norm.y = 1;
+    }else{
+        SDL_Vector dir = Vec_CreateVecByPoints(p1, p2);
+        norm.x = 1;
+        norm.y = -dir.y/dir.x;
+        Vec_NormalizeSelf(&norm);
+    }
+    const int half_num = floor(width/2.0f);
+    const int totle_num = half_num*2+2;
+    SDL_Point points[totle_num];
+    points[0] = *p1;
+    points[1] = *p2;
+    for(int i=2;i<half_num+2;i+=2){
+        points[i].x = ceil(points[i-2].x+norm.x);
+        points[i].y = ceil(points[i-2].y+norm.y);
+        points[i+1].x = ceil(points[i-1].x+norm.x);
+        points[i+1].y = ceil(points[i-1].y+norm.y);
+        /*
+        points[i].x = ceil(p1->x+(i-2)*norm.x);
+        points[i].y = ceil(p1->y+(i-2)*norm.y);
+        points[i+1].x = ceil(p2->x+(i-2)*norm.x);
+        points[i+1].y = ceil(p2->y+(i-2)*norm.y);
+        */
+    }
+    for(int i=half_num+2;i<half_num*2+2;i+=2){
+        points[i].x = ceil(points[i-2].x-norm.x);
+        points[i].y = ceil(points[i-2].y-norm.y);
+        points[i+1].x = ceil(points[i-1].x-norm.x);
+        points[i+1].y = ceil(points[i-1].y-norm.y);
+        /*
+        points[i].x = floor(p1->x-(i-2)*norm.x);
+        points[i].y = floor(p1->y-(i-2)*norm.y);
+        points[i+1].x = floor(p2->x-(i-2)*norm.x);
+        points[i+1].y = floor(p2->y-(i-2)*norm.y);
+        */
+    }
+    SDL_RenderDrawLines(render, points, totle_num);
+}
+
+void SDL_RenderDrawWidthRectEx(SDL_Renderer* render, SDL_Rect* rect, real degree, int width){
+    SDL_Point points[4];
+    RotateRectangle(points, NULL, rect, degree);
+    //SDL_RenderDrawCloseLines(render, points, 4);
+    SDL_RenderDrawCloseWidthLines(render, points, width, 4);
+}
+
+void SDL_RenderDrawCloseWidthLines(SDL_Renderer* render, SDL_Point* points, int width, int num){
+    for(int i=0;i<num-1;i++)
+        SDL_RenderDrawWidthLine(render, &points[i], &points[i+1], width);
+    SDL_RenderDrawWidthLine(render, &points[0], &points[3], width);
+}

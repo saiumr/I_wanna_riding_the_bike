@@ -1,0 +1,8 @@
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set(JsonCpp_prefix "${PROJECT_SOURCE_DIR}/dependence/JsonCpp")
+    set(JsonCpp_LIBDIR "${JsonCpp_prefix}/lib")
+    set(JsonCpp_INCLUDE_DIRS ${JsonCpp_prefix}/include)
+    set(JsonCpp_LIBRARIES "-L${JsonCpp_LIBDIR} -ljsoncpp")
+else()
+    find_package(jsoncpp REQUIRED)
+endif()

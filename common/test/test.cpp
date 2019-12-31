@@ -1,5 +1,4 @@
 #include "unittest.h"
-#include <string.h>
 
 void say(){
     printf("this is a output");

@@ -10,18 +10,18 @@ void ImageEntrepot::LoadImage(const string& filename){
     string image_name = GetNameFromFile(filename);
     auto it = images.find(image_name);
     if(it!=images.end())
-        cerr<<image_name<<" is exists";
+        SDL_LogWarn(SDL_LOG_CATEGORY_VIDEO, "%s is exists", image_name.c_str());
     else{
         SDL_Surface* surface = IMG_Load(filename.c_str());
         if(surface==nullptr){
-            cerr<<filename<<" load failed";
+            SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "%s load failed", filename.c_str());
             return ;
         }
         SDL_Texture* texture = SDL_CreateTextureFromSurface(Director::GetDirector()->GetRender(), surface);
         SDL_FreeSurface(surface);
         if(texture==nullptr){
             SDL_DestroyTexture(texture);
-            cerr<<"texture can't create";
+            SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "texture can't create");
             return;
         }
         SDL_DestroyTexture(it->second);
@@ -33,19 +33,19 @@ void ImageEntrepot::LoadImageStrict(string filename){
     string image_name = GetNameFromFile(filename);
     auto it = images.find(image_name);
     if(it!=images.end()) {
-        cerr<<filename<<" is exists";
+        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "%s is exists", image_name.c_str());
         return;
     }else{
         SDL_Surface* surface = IMG_Load(filename.c_str());
         if(surface==nullptr){
-            cerr<<filename<<" load failed";
+            SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "%s load failed", filename.c_str());
             return ;
         }
         SDL_Texture* texture = SDL_CreateTextureFromSurface(Director::GetDirector()->GetRender(), surface);
         SDL_FreeSurface(surface);
         if(texture==nullptr){
             SDL_DestroyTexture(texture);
-            cerr<<"texture can't create";
+            SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "texture can't create");
             return;
         }
         SDL_DestroyTexture(it->second);
@@ -64,14 +64,14 @@ void ImageEntrepot::DeleteImage(string name){
 SDL_Texture* ImageEntrepot::GetImage(string name){
     auto it = images.find(name);
     if(it==images.end()){
-        cerr<<name<<" is not in entrepot";
+        SDL_LogWarn(SDL_LOG_CATEGORY_VIDEO, "%s is not in entrepot", name.c_str());
         return nullptr;
     }
     return it->second;
 }
 
 void ImageEntrepot::PrintContent(){
-    cout<<"ImageEntrepot's content:";
+    SDL_LogInfo(SDL_LOG_CATEGORY_VIDEO, "ImageEntrepot's content:");
     for(auto i : images){
         cout<<i.first<<endl;
     }

@@ -30,9 +30,7 @@ bool SAT(SDL_Point poly1[], int num1, SDL_Point poly2[], int num2){
 }
 
 bool CirlePoint(SDL_Circle c, SDL_Point p){
-    if(fabs(GetDistance(p.x, p.y, c.center.x, c.center.y) - c.r) <= EPS)
-        return true;
-    return false;
+    return fabs(GetDistance(p.x, p.y, c.center.x, c.center.y) - c.r) <= EPS;
 }
 
 bool RotRectPoint(SDL_RotRect rrect, SDL_Point p){

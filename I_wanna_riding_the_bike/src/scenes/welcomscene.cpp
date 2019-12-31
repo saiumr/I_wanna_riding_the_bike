@@ -19,7 +19,6 @@ void WelcomeScene::OnInit(){
 }
 
 void WelcomeScene::EventHandle(SDL_Event& event){
-
 }
 
 void WelcomeScene::OnDestroy(){

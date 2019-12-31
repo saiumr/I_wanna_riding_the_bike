@@ -17,10 +17,19 @@
 
 ## 运行方法
 
-首先创建build文件夹  
+首先创建build文件夹    
+
+`mkdir build`  
+
 进入build文件夹  
-运行`cmake ..`,`make`  
-然后退出到根目录，如果你有python3，就使用  
+`cd build`  
+  
+运行  
+`cmake ..`,`make`  
+    
+然后退出到根目录  
+`cd ..`  
+如果你有python3，就使用  
 `python3 run.py`  
-如果没有就 
+如果没有python3就  
 `./build/I_wanna_riding_the_bike/play`

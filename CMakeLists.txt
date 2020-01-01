@@ -21,8 +21,8 @@ macro(Add_Test testname)
     add_executable(${testname}_test ${testname}.cpp ${source_files})
 endmacro()
 
-link_libraries(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${JsonCpp_LIBRARIES})
-include_directories(${COMMON_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${JsonCpp_INCLUDE_DIRS})
+link_libraries(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+include_directories(${COMMON_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 # common库必须先包含，因为他要产生供其他文件使用的链接库
 add_subdirectory(common)

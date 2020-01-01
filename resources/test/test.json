@@ -1,0 +1,46 @@
+{
+	"image_path" : "test.png",
+	"images" : 
+	[
+		{
+			"name" : "fireland",
+			"rect" : 
+			{
+				"height" : 42,
+				"width" : 42,
+				"x" : 0,
+				"y" : 0
+			}
+		},
+		{
+			"name" : "grassland",
+			"rect" : 
+			{
+				"height" : 42,
+				"width" : 42,
+				"x" : 42,
+				"y" : 0
+			}
+		},
+		{
+			"name" : "gravel",
+			"rect" : 
+			{
+				"height" : 42,
+				"width" : 42,
+				"x" : 84,
+				"y" : 0
+			}
+		},
+		{
+			"name" : "green_land",
+			"rect" : 
+			{
+				"height" : 42,
+				"width" : 42,
+				"x" : 126,
+				"y" : 0
+			}
+		}
+	]
+}

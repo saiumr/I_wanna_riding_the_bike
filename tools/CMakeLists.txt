@@ -1,6 +1,9 @@
-add_subdirectory(test)
+include(cmake/tool_common-config.cmake)
 
-aux_source_directory(src SRC)
-include_directories(include)
+add_subdirectory(common)
 
-add_executable(MapEditor ${SRC} ${COMMON_SRC})
+include_directories(${TOOL_COMMON_INCLUDE_DIRS})
+link_libraries(${TOOL_COMMON_LIBRARIES})
+
+add_subdirectory(ImageSheetor)
+add_subdirectory(MapEditor)

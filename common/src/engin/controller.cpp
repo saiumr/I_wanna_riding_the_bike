@@ -8,7 +8,7 @@ Controller* Controller::controller = nullptr;
 
 Controller* Controller::GetController(){
     if(controller==nullptr)
-        cerr<<"no controller";
+        SDL_LogError(SDL_LOG_CATEGORY_INPUT, "no controller");
     return controller;
 }
 

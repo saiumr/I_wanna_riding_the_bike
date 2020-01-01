@@ -15,14 +15,14 @@ Frame::Frame():image(nullptr),interval(0){}
 
 void Frame::SetInterval(int interval){
     if(interval<0)
-        cerr << __FUNCTION__ << ":interval can't less than 0" << endl;
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "interval can't less than 0");
     else
         this->interval = interval;
 }
 
 void Frame::SetImage(SDL_Texture* image){
     if(image == nullptr)
-        cerr<<__FUNCTION__<<":Frame's image can't be empty"<<endl;
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Frame's image can't be empty");
     else
         this->image = image;
 }

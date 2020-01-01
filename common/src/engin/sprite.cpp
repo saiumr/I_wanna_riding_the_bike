@@ -19,7 +19,7 @@ Sprite_Image* Sprite::GetImage(){
 
 void Sprite::SuitSize(){
     if(image== nullptr){
-        cerr<<"Sprite::SuitSize(): can't suit size because image==nullptr";
+        SDL_LogWarn(SDL_LOG_CATEGORY_CUSTOM, "Sprite::SuitSize(): can't suit size because image==nullptr");
         return;
     }
     int w, h;

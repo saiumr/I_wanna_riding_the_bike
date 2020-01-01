@@ -4,6 +4,6 @@ aux_source_directory(src/controllers CONTROLLERS)
 set(GAME_EXE_NAME play)
 include_directories(include)
 
-add_executable(${GAME_EXE_NAME} main.cpp ${SRC} ${CONTROLLERS} ${SCENES} ${COMMON_SRC})
+add_executable(${GAME_EXE_NAME} main.cpp ${SRC} ${CONTROLLERS} ${SCENES})
 
 add_subdirectory(test)

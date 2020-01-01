@@ -16,11 +16,6 @@ include(cmake/sdl2_ttf-config.cmake)
 include(cmake/jsoncpp-config.cmake)
 include(cmake/common-config.cmake)
 
-macro(Add_Test testname)
-    aux_source_directory(../src source_files)
-    add_executable(${testname}_test ${testname}.cpp ${source_files})
-endmacro()
-
 link_libraries(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 include_directories(${COMMON_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 

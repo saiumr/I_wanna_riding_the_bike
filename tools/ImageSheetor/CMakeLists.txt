@@ -1,4 +1,6 @@
 set(EXE_NAME ImageSheetor)
+set(ImageSheetor_VERSION_MAJOR 1)
+set(ImageSheetor_VERSION_MAJOR 0)
 
 include_directories(include ${JsonCpp_INCLUDE_DIRS})
 link_libraries(${JsonCpp_LIBRARIES} ${PROJECT_LINK_LIBRARIES})

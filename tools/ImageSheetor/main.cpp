@@ -4,7 +4,7 @@
 
 #include "main.hpp"
 
-const int ImageSheetor::Padding = 25;
+const int ImageSheetor::Padding = 100;
 const int ImageSheetor::Error_Index = -1;
 
 string GetNameFromFile(const string& filename){
@@ -20,7 +20,7 @@ string GetNameFromFile(const string& filename){
     return substring.substr(0, final_pos);
 }
 
-ImageSheetor::ImageSheetor():App("ImageSheetor", 200, 200, SDL_WINDOW_SHOWN),image_idx(Error_Index){
+ImageSheetor::ImageSheetor():App("ImageSheetor", 200, 200, SDL_WINDOW_SHOWN),image_idx(Error_Index),oldleftbutton(false),moving_idx(Error_Index){
     SDL_LogSetPriority(SDL_LOG_CATEGORY_INPUT, SDL_LOG_PRIORITY_INFO);
 }
 
@@ -96,19 +96,12 @@ void ImageSheetor::Update(){
         SDL_RenderCopy(render, textureManager[i], nullptr, &rect);
     }
     handleSelectedImage();
-}
-
-SDL_Point ImageSheetor::findBoarder(){
-    SDL_Point boarder = {0, 0};
-    for(auto & image : images){
-        boarder.x = std::max(boarder.x, image.GetRect().x+image.GetRect().w);
-        boarder.y = std::max(boarder.y, image.GetRect().y+image.GetRect().h);
-    }
-    return boarder;
+    oldleftbutton = GetMouseInfo().button[SDL_BUTTON_LEFT];
 }
 
 void ImageSheetor::handleSelectedImage(){
-    for(int i=0;i<images.size();i++){
+    int i;
+    for(i=0;i<images.size();i++){
         SDL_Rect rect = images[i].GetRect();
         rect.x += Padding;
         rect.y += Padding;
@@ -120,6 +113,24 @@ void ImageSheetor::handleSelectedImage(){
             break;
         }
     }
+    if(i==images.size() && GetMouseInfo().button[SDL_BUTTON_LEFT])
+        image_idx = Error_Index;
+    //if(image_idx!=Error_Index){
+        SDL_Point mousepos = GetMouseInfo().pos;
+        if(moving_idx==Error_Index && image_idx!=Error_Index) {
+            SDL_Rect oldrect = images[image_idx].GetRect();
+            oldrect.x += Padding;
+            oldrect.y += Padding;
+            if (moving_idx == Error_Index && SDL_PointInRect(&mousepos, &oldrect) && !oldleftbutton &&
+                mouseinfo.button[SDL_BUTTON_LEFT])
+                moving_idx = image_idx;
+        }
+        if(!mouseinfo.button[SDL_BUTTON_LEFT]) {
+            moving_idx = Error_Index;
+            relayout();
+        }
+        if(moving_idx!=Error_Index)
+            handleImageMovement();
     if(image_idx!=Error_Index){
         SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
         SDL_Rect rect = images[image_idx].GetRect();
@@ -129,13 +140,47 @@ void ImageSheetor::handleSelectedImage(){
     }
 }
 
-void ImageSheetor::relayout(){
-    for(int i=0;i<images.size();i++){
-        if(i==0)
-            images[i].SetPos(0, 0);
-        else
-            images[i].SetPos(images[i-1].GetRect().x+images[i-1].GetRect().w, 0);
+void ImageSheetor::handleImageMovement(){
+    SDL_Rect oldrect = images[moving_idx].GetRect();
+    MouseInfo mouseinfo = GetMouseInfo();
+    SDL_Point mousepos = mouseinfo.pos;
+    oldrect.x += Padding;
+    oldrect.y += Padding;
+    SDL_Rect rect = {mousepos.x-oldrect.w/2,mousepos.y-oldrect.h/2, oldrect.w, oldrect.h};
+    Vector2D speed(rect.x-oldrect.x, rect.y-oldrect.y);
+    for(int i=0;i<images.size();i++) {
+        if(i==moving_idx)
+            continue;
+        SDL_Rect dstrect = images[i].GetRect();
+        dstrect.x += Padding;
+        dstrect.y += Padding;
+        if(RectRect(rect, dstrect)){
+            RectCollisionInfo info = GetRectRectInfo(rect, speed, dstrect);
+            HandleRectColliWithInfo(rect, dstrect, info);
+        }
     }
+    images[moving_idx].SetPos(rect.x-Padding, rect.y-Padding);
+}
+
+SDL_Point ImageSheetor::findBoarder(){
+    SDL_Point boarder = {0, 0};
+    for(auto & image : images){
+        boarder.x = std::max(boarder.x, image.GetRect().x+image.GetRect().w);
+        boarder.y = std::max(boarder.y, image.GetRect().y+image.GetRect().h);
+    }
+    return boarder;
+}
+
+void ImageSheetor::relayout() {
+    SDL_Point min_boarder = {INT_MAX, INT_MAX};
+    for(auto & image : images){
+        min_boarder.x = std::min(min_boarder.x, image.GetRect().x);
+        min_boarder.y = std::min(min_boarder.y, image.GetRect().y);
+    }
+    for (auto &i : images) {
+        i.SetPos(i.GetRect().x - min_boarder.x, i.GetRect().y - min_boarder.y);
+    }
+    Resize();
 }
 
 ImageSheetor::~ImageSheetor(){

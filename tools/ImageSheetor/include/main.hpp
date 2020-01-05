@@ -18,6 +18,7 @@
 #include "imagesheetreader.hpp"
 #include "imagesheetwriter.hpp"
 #include "texturemanager.hpp"
+#include "engin/collisionapproch.hpp"
 #include <map>
 using namespace std;
 
@@ -35,13 +36,16 @@ public:
 private:
     SDL_Point findBoarder();
     void handleSelectedImage();
+    void handleImageMovement();
     void relayout();
     void deleteImage();
     bool idx_valid();
     void saveSheet();
     int image_idx;
+    int moving_idx;
     vector<ImageSheet::Image> images;
     TextureManager textureManager;
+    bool oldleftbutton;
 };
 
 #endif //I_WANNA_RIDING_THE_BIKE_MAIN_HPP

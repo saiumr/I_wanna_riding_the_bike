@@ -12,6 +12,7 @@ struct RectCollisionInfo{
 };
 
 RectCollisionInfo GetRectRectInfo(SDL_Rect src, Vector2D speed, SDL_Rect dst);
+void HandleRectColliWithInfo(SDL_Rect& src, SDL_Rect& dst, RectCollisionInfo& info);
 
 bool RectPoint(SDL_Rect rect, SDL_Point point);
 bool RectRect(SDL_Rect rect1, SDL_Rect rect2);

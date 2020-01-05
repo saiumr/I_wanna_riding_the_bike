@@ -15,21 +15,7 @@ public:
         if(RectRect(rect1, rect2)){
             Vector2D speed(rect1.x-oldpos.x, rect1.y-oldpos.y);
             RectCollisionInfo info = GetRectRectInfo(rect1, speed, rect2);
-
-            int signX = info.speed.GetX()>0?1:-1,
-                signY = info.speed.GetY()>0?1:-1;
-            /* 令人窒息的错误，如果这里使用这种方法得到正负的话，由于速度可以是0，就会产生0/0的不可知错误，导致最后产生很大的数将物体弹出
-            int signX = info.speed.GetX()/abs(info.speed.GetX()),
-                signY = info.speed.GetY()/abs(info.speed.GetY());
-            */
-            if(info.vertical_offset<info.horizen_offset)
-                rect1.y = rect1.y - signY*info.vertical_offset;
-            else if(info.vertical_offset>info.horizen_offset)
-                rect1.x = rect1.x - signX*info.horizen_offset;
-            else{
-                rect1.x = rect1.x - signX*info.horizen_offset;
-                rect1.y = rect1.y - signY*info.vertical_offset;
-            }
+            HandleRectColliWithInfo(rect1, rect2, info);
         }
         oldpos.x = rect1.x;
         oldpos.y = rect1.y;

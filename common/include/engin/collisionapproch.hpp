@@ -1,8 +1,17 @@
 #ifndef __COLLISION_H__
 #define __COLLISION_H__
 #include <SDL.h>
+#include <cassert>
 #include "geomentry.hpp"
 #include "mmath.hpp"
+
+struct RectCollisionInfo{
+    Vector2D speed;
+    int vertical_offset;
+    int horizen_offset;
+};
+
+RectCollisionInfo GetRectRectInfo(SDL_Rect src, Vector2D speed, SDL_Rect dst);
 
 bool RectPoint(SDL_Rect rect, SDL_Point point);
 bool RectRect(SDL_Rect rect1, SDL_Rect rect2);

@@ -27,8 +27,9 @@ using namespace std;
 /**
  * 这个类方便你创建你自己的程序
  */
-class App{
+class GUITestframework {
 public:
+    using KeyMap = map<SDL_Keycode, bool>;
     /**
      * 用于存储鼠标按键和位置的结构体
      */
@@ -41,9 +42,9 @@ public:
      * 延时的长度(ms计)
      */
     static const int delay_time = 10;
-    App(const string& title, int width, int height, Uint32 flag);
+    GUITestframework(const string& title, int width, int height, Uint32 flag);
     /**
-     * 用于处理事件的函数，每次重写之后都需要调用App::EventHandle()
+     * 用于处理事件的函数，每次重写之后都需要调用GUITestframework::EventHandle()
      * @param event
      */
     virtual void EventHandle(SDL_Event& event);
@@ -67,12 +68,17 @@ public:
      */
     void Quit();
     MouseInfo& GetMouseInfo();
-    ~App();
+    bool KeyPressing(SDL_Keycode key);
+    bool KeyPressed(SDL_Keycode key);
+    bool KeyReleased(SDL_Keycode key);
+    ~GUITestframework();
 protected:
     SDL_Window* window;
     SDL_Renderer* render;
     bool isquit;
     MouseInfo mouseinfo;
+    KeyMap keystate;
+    KeyMap oldkeystate;
 private:
     SDL_Point size;
 };

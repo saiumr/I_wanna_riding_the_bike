@@ -4,10 +4,16 @@
 
 #include "imagesheetwriter.hpp"
 
-#include <utility>
-
 void ImageSheetWriter::AddImage(string name, SDL_Surface* surface, SDL_Rect rect){
     sheet.push_back(ImageSheet::Image(std::move(name), surface, rect));
+}
+
+void ImageSheetWriter::AddImage(ImageSheet::Image& image){
+    sheet.push_back(image);
+}
+
+void ImageSheetWriter::AddImage(ImageSheet::Image&& image){
+    sheet.push_back(std::move(image));
 }
 
 ImageSheetWriter::ImageSheetWriter(vector<ImageSheet::Image> s){
@@ -16,17 +22,6 @@ ImageSheetWriter::ImageSheetWriter(vector<ImageSheet::Image> s){
 
 void ImageSheetWriter::SetContent(vector<ImageSheet::Image> s){
     sheet = s;
-}
-
-void ImageSheetWriter::DeleteImage(const int idx){
-    auto it = sheet.cbegin()+idx;
-    sheet.erase(it);
-}
-
-void ImageSheetWriter::DeleteImage(const string name){
-    for(auto it=sheet.begin();it!=sheet.end();it++)
-        if(it->GetName() == name)
-            sheet.erase(it);
 }
 
 void ImageSheetWriter::Write2File(const string filename){
@@ -41,12 +36,15 @@ void ImageSheetWriter::writeImage(string filename){
     }
     SDL_Point boarder = FindMaxBorder();
     SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, boarder.x, boarder.y, 32, SDL_PIXELFORMAT_RGBA8888);
+    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
+    SDL_SetSurfaceAlphaMod(surface, 0);
     if(surface==nullptr){
         SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "can't write to PNG image");
         return;
     }
     SDL_Rect surface_rect = {0, 0, surface->w, surface->h};
     SDL_FillRect(surface, &surface_rect, SDL_MapRGB(surface->format, 255, 255, 255));
+
     for(int i=0;i<sheet.size();i++) {
         SDL_Surface* converted_surface = SDL_ConvertSurfaceFormat(sheet[i].GetImage(), SDL_PIXELFORMAT_RGBA8888, 0);
         SDL_Rect rect = sheet[i].GetRect();

@@ -5,7 +5,8 @@ bool RectPoint(SDL_Rect rect, SDL_Point point){
 }
 
 bool RectRect(SDL_Rect rect1, SDL_Rect rect2){
-    return SDL_IntersectRect(&rect1, &rect2, NULL);
+    SDL_Rect trivialrect;   //这里不要问我为什么不需要返回值trivialrect但是却加上了，SDL的这个函数就是这样，不给最后一个参数结果不正确
+    return SDL_IntersectRect(&rect1, &rect2, &trivialrect);
 }
 
 bool RectLine(SDL_Rect rect, SDL_Line line){
@@ -52,4 +53,37 @@ bool RotateRectPointByAngle(SDL_Rect rect, SDL_Point point, real degree){
     SDL_Point center = GetRectangleCenter(&rect);
     RotatePointSelf(&center, &point, degree);
     return RectPoint(rect, point);
+}
+
+RectCollisionInfo GetRectRectInfo(SDL_Rect src, Vector2D speed, SDL_Rect dst){
+    RectCollisionInfo info = {Vector2D(0, 0), 0, 0};
+    if(speed.GetY()>0) {
+        if (src.y < dst.y) {
+            info.vertical_offset = src.y + src.h - dst.y;
+        } else {
+            info.vertical_offset = src.y-dst.y + src.h;
+        }
+    }else{
+        if(src.y > dst.y){
+            info.vertical_offset = (dst.y+dst.h) - src.y;
+        }else{
+            info.vertical_offset = dst.y+dst.h - (src.y+src.h) + src.h;
+        }
+    }
+    if(speed.GetX()>0){
+        if(src.x<dst.x)
+            info.horizen_offset = src.x+src.w - dst.x;
+        else{
+            info.horizen_offset = src.x-dst.x + src.w;
+        }
+    }else{
+        if(src.x>dst.x)
+            info.horizen_offset = dst.x+dst.w - src.x;
+        else
+            info.horizen_offset = dst.x+dst.w - (src.x+src.w) + src.w;
+    }
+    assert((info.vertical_offset>=0));
+    assert((info.horizen_offset>=0));
+    info.speed = speed;
+    return info;
 }

@@ -1,5 +1,8 @@
-include_directories(../include)
+include_directories(../include ${COMMON_TEST_INCLUDE_DIRS})
+link_libraries(${PROJECT_LINK_LIBRARIES})
 
-Add_Test(mmath)
-Add_Test(SDL_Draw)
-Add_Test(test)
+add_executable(mmath_test mmath.cpp)
+add_executable(SDL_Draw_test SDL_Draw.cpp)
+add_executable(test_test test.cpp)
+add_executable(RectRectCollision_test RectRectCollision.cpp)
+target_link_libraries(RectRectCollision_test ${COMMON_TEST_LIBRARIES})

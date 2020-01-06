@@ -2,9 +2,9 @@
 // Created by 桂明谦 on 2019/12/31.
 //
 
-#include "app.hpp"
+#include "guitestframework.hpp"
 
-App::App(const string& title, int width, int height, Uint32 flag):isquit(false),size({width, height}){
+GUITestframework::GUITestframework(const string& title, int width, int height, Uint32 flag):isquit(false),size({width, height}){
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG);
     TTF_Init();
@@ -20,22 +20,27 @@ App::App(const string& title, int width, int height, Uint32 flag):isquit(false),
     }
 }
 
-App::MouseInfo::MouseInfo():pos({0, 0}){
+GUITestframework::MouseInfo::MouseInfo():pos({0, 0}){
     button[SDL_BUTTON_LEFT] = false;
     button[SDL_BUTTON_RIGHT] = false;
     button[SDL_BUTTON_MIDDLE] = false;
 }
 
-SDL_Point App::GetOriginalSize(){
+SDL_Point GUITestframework::GetOriginalSize(){
     return size;
 }
 
-void App::EventHandle(SDL_Event& event){
+void GUITestframework::EventHandle(SDL_Event& event){
     if(event.type==SDL_QUIT)
         OnExit();
-    if(event.type==SDL_KEYDOWN)
-        if(event.key.keysym.sym == SDLK_ESCAPE)
+    if(event.type==SDL_KEYDOWN) {
+        if (event.key.keysym.sym == SDLK_ESCAPE)
             OnExit();
+        keystate[event.key.keysym.sym] = true;
+    }
+    if(event.type==SDL_KEYUP)
+        keystate[event.key.keysym.sym] = false;
+
     if(event.type==SDL_WINDOWEVENT_RESIZED){
         SDL_Point newsize = {event.window.data1, event.window.data2};
         SDL_Point size = GetOriginalSize();
@@ -55,25 +60,55 @@ void App::EventHandle(SDL_Event& event){
     }
 }
 
-void App::Quit(){
+void GUITestframework::Quit(){
     isquit = true;
 }
 
-void App::OnExit() {
+void GUITestframework::OnExit() {
     Quit();
 }
 
-App::MouseInfo& App::GetMouseInfo(){
+bool GUITestframework::KeyPressing(SDL_Keycode key){
+    auto it = keystate.find(key);
+    if(it==keystate.end())
+        return false;
+    auto oldit = oldkeystate.find(key);
+    if(oldit==oldkeystate.end())
+        return false;
+    return oldit->second && it->second;
+}
+
+bool GUITestframework::KeyPressed(SDL_Keycode key){
+    auto it = keystate.find(key);
+    if(it==keystate.end())
+        return false;
+    auto oldit = oldkeystate.find(key);
+    if(oldit==oldkeystate.end())
+        return it->second;
+    return !oldit->second && it->second;
+}
+
+bool GUITestframework::KeyReleased(SDL_Keycode key){
+    auto it = keystate.find(key);
+    auto oldit = oldkeystate.find(key);
+    if(it==keystate.end())
+        return false;
+    if(oldit==oldkeystate.end())
+        return false;
+    return oldit->second && !it->second;
+}
+
+GUITestframework::MouseInfo& GUITestframework::GetMouseInfo(){
     return mouseinfo;
 }
 
-App::~App(){
+GUITestframework::~GUITestframework(){
     SDL_Quit();
     TTF_Quit();
     IMG_Quit();
 }
 
-void App::Run(){
+void GUITestframework::Run(){
     SDL_Event event;
     while(!isquit){
         SDL_SetRenderDrawColor(render, 200, 200, 200, 255);
@@ -84,5 +119,6 @@ void App::Run(){
         Update();
         SDL_RenderPresent(render);
         SDL_Delay(delay_time);
+        oldkeystate = keystate;
     }
 }

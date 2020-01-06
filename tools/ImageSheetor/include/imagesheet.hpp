@@ -22,6 +22,7 @@ public:
         SDL_Surface* GetImage() const;
         SDL_Rect     GetRect() const;
         string       GetName() const;
+        void         SetPos(int x, int y);
     private:
         SDL_Surface* image;
         SDL_Rect rect;

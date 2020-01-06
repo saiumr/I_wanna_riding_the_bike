@@ -40,6 +40,11 @@ const ImageSheet::Image& ImageSheet::operator[](int idx) const{
     return sheet[idx];
 }
 
+void ImageSheet::Image::SetPos(int x, int y){
+    rect.x = x;
+    rect.y = y;
+}
+
 void ImageSheet::SetContent(vector<Image> s){
     sheet = s;
 }

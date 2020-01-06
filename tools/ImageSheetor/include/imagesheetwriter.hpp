@@ -11,6 +11,7 @@
 #include "SDL_image.h"
 #include <string>
 #include <fstream>
+#include <utility>
 using namespace std;
 
 class ImageSheetWriter {
@@ -19,8 +20,8 @@ public:
     explicit ImageSheetWriter(vector<ImageSheet::Image> s);
     void SetContent(vector<ImageSheet::Image> s);
     void AddImage(string name, SDL_Surface* surface, SDL_Rect rect);
-    void DeleteImage(int idx);
-    void DeleteImage(string name);
+    void AddImage(ImageSheet::Image& image);
+    void AddImage(ImageSheet::Image&& image);
     void Write2File(string filename);
 private:
     void writeImage(string filename);

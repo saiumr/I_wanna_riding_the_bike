@@ -15,6 +15,8 @@
 
 **VisualGMQ && saiumr**: 我们想了很久，确定了没什么说的了...
 
+**VisualGMQ**: 太TM难了，我快写不下去了
+
 ## 运行方法
 
 首先创建build文件夹    

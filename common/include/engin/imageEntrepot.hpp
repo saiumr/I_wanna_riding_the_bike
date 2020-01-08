@@ -12,7 +12,15 @@
 #include <string>
 #include <utility>
 #include <iostream>
+#include <algorithm>
 using namespace std;
+
+enum FileType{
+    FILE_TYPE_IMAGE,
+    FILE_TYPE_JSON,
+    FILE_TYPE_TXT,
+    FILE_TYPE_UNRECOGNIZE
+};
 
 class Director;
 
@@ -20,6 +28,7 @@ class ImageEntrepot final{
 public:
     static void LoadImage(const string& filename);
     static void LoadImageStrict(string filename);
+    static void LoadTexture(string name, SDL_Texture* texture);
     static void DeleteImage(string filename);
     static void PrintContent();
     static SDL_Texture* GetImage(string name);
@@ -30,6 +39,12 @@ private:
     static map<string, SDL_Texture*> images;
 };
 
-string GetNameFromFile(const string& filename);
+string GetFilename(const string& filename);
+
+string GetFilenameWithoutSuffix(const string& filename);
+
+FileType GetFileType(const string& filename);
+
+string GetBaseName(const string& filename);
 
 #endif //FARTRACE_IMAGEENTREPOT_HPP

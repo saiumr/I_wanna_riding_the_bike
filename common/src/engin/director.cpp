@@ -1,6 +1,8 @@
 #include "engin/director.hpp"
 
 Director* Director::director = nullptr;
+const string Director::Platform = SDL_GetPlatform();
+const string Director::PathSplitSymbol = Director::Platform=="Windows"?"\\":"/";
 
 Director* Director::GetDirector(){
     if(director==nullptr){
@@ -40,6 +42,7 @@ void Director::init(){
     SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
     debug_font = FC_CreateFont();
     FC_LoadFont(debug_font, render, "resources/SimHei.ttf", 20, {255, 0, 0, 255}, TTF_STYLE_NORMAL);
+    GUIResourceManager::InitGUI(render);
 }
 
 FC_Font* Director::GetDebugFont(){
@@ -74,10 +77,10 @@ Scene* Director::GetCurrentScene(){
 }
 
 //TODO 这个函数还可以改善，可以根据前后两个场景来保留共同的图像
-void Director::LoadImage(string filename){
-    ifstream file(filename);
+void Director::LoadImage(string config_filename){
+    ifstream file(config_filename);
     if(file.fail()){
-        SDL_LogWarn(SDL_LOG_CATEGORY_AUDIO, "no image loader file %s", filename.c_str());
+        SDL_LogWarn(SDL_LOG_CATEGORY_AUDIO, "no image loader file %s", config_filename.c_str());
         director->error_flag = IMAGE_ERROR;
         return;
     }

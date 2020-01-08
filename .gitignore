@@ -3,3 +3,8 @@
 build
 cache
 cmake-build-debug
+tools/common/lib
+tools/ImageSheetor/lib
+tools/MapEditor/lib
+common/lib
+common/GUITestframe/lib

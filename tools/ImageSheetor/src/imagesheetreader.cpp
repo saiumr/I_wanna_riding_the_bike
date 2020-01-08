@@ -2,7 +2,7 @@
 // Created by 桂明谦 on 2020/1/1.
 //
 
-#include "imagesheetreader.hpp"
+#include "ImageSheetor/imagesheetreader.hpp"
 
 ImageSheetReader::ImageSheetReader(string filename){
     Parse(std::move(filename));

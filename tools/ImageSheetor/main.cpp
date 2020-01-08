@@ -2,13 +2,19 @@
 // Created by 桂明谦 on 2019/12/30.
 //
 
-#include "main.hpp"
+#include "ImageSheetor/main.hpp"
 
 const int ImageSheetor::Padding = 100;
 const int ImageSheetor::Error_Index = -1;
 
-string GetNameFromFile(const string& filename){
-    size_t pos = filename.find_last_of('/');
+string GetNameFromFileWithoutSuffix(const string& filename){
+    const char* platform = SDL_GetPlatform();
+    string split_symbol;
+    if(strcmp(platform, "Windows")==0)
+        split_symbol = "\\";
+    else
+        split_symbol = "/";
+    size_t pos = filename.find_last_of(split_symbol);
     string substring;
     if(pos != std::string::npos)
         substring = filename.substr(pos+1);
@@ -32,7 +38,7 @@ void ImageSheetor::EventHandle(SDL_Event& event){
         if(surface==nullptr){
             SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "%s is a invalid image file", event.drop.file);
         }else{
-            string filename = GetNameFromFile(event.drop.file);
+            string filename = GetNameFromFileWithoutSuffix(event.drop.file);
             SDL_Rect rect = {0, 0, surface->w, surface->h};
             if(!images.empty()) {
                 SDL_Rect lastsheet_rect = images[images.size() - 1].GetRect();
@@ -89,6 +95,22 @@ void ImageSheetor::Resize() {
 }
 
 void ImageSheetor::Update(){
+    SDL_Point rb = {0, 0};
+    for(auto& i : images){
+        rb.x = std::max(i.GetRect().x+i.GetRect().w, rb.x);
+        rb.y = std::max(i.GetRect().y+i.GetRect().h, rb.y);
+    }
+    SDL_Point lt = {INT_MAX, INT_MAX};
+    for(auto& i : images){
+        lt.x = std::min(lt.x, i.GetRect().x);
+        lt.y = std::min(lt.y, i.GetRect().y);
+    }
+    rb.x-=lt.x;
+    rb.y-=lt.y;
+    SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
+    SDL_Rect bgrect = {lt.x+Padding, lt.y+Padding, rb.x, rb.y};
+    SDL_RenderFillRect(render, &bgrect);
+
     for(int i=0;i<images.size();i++){
         SDL_Rect rect = images[i].GetRect();
         rect.x += Padding;
@@ -115,7 +137,6 @@ void ImageSheetor::handleSelectedImage(){
     }
     if(i==images.size() && GetMouseInfo().button[SDL_BUTTON_LEFT])
         image_idx = Error_Index;
-    //if(image_idx!=Error_Index){
         SDL_Point mousepos = GetMouseInfo().pos;
         if(moving_idx==Error_Index && image_idx!=Error_Index) {
             SDL_Rect oldrect = images[image_idx].GetRect();

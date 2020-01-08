@@ -2,7 +2,7 @@
 // Created by 桂明谦 on 2020/1/1.
 //
 
-#include "imagesheetwriter.hpp"
+#include "ImageSheetor/imagesheetwriter.hpp"
 
 void ImageSheetWriter::AddImage(string name, SDL_Surface* surface, SDL_Rect rect){
     sheet.push_back(ImageSheet::Image(std::move(name), surface, rect));

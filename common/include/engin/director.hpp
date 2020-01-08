@@ -10,6 +10,7 @@
 #include "SDL_image.h"
 #include "SDL_FontCache.h"
 #include "imageEntrepot.hpp"
+#include "gui/guiresourcemanager.hpp"
 using namespace std;
 
 class ImageEntrepot;
@@ -28,6 +29,12 @@ class Director final{
 public:
     friend Stage;
 
+    /**
+     * 现在平台的名称
+     */
+    static const string Platform;
+
+    static const string PathSplitSymbol;
     /**
      * 获得现在的导演
      * @return 现在的导演
@@ -63,7 +70,7 @@ public:
     unsigned int GetDebugFlag();
     void EnableDebug(DebugType type);
     FC_Font* GetDebugFont();
-    void LoadImage(string filename);
+    void LoadImage(string config_filename);
     ~Director();
 private:
     Director(Director& other) = delete;

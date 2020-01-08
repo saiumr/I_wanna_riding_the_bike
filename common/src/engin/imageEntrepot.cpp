@@ -7,7 +7,7 @@
 map<string, SDL_Texture*> ImageEntrepot::images = map<string, SDL_Texture*>();
 
 void ImageEntrepot::LoadImage(const string& filename){
-    string image_name = GetNameFromFile(filename);
+    string image_name = GetFilenameWithoutSuffix(filename);
     auto it = images.find(image_name);
     if(it!=images.end())
         SDL_LogWarn(SDL_LOG_CATEGORY_VIDEO, "%s is exists", image_name.c_str());
@@ -30,7 +30,7 @@ void ImageEntrepot::LoadImage(const string& filename){
 }
 
 void ImageEntrepot::LoadImageStrict(string filename){
-    string image_name = GetNameFromFile(filename);
+    string image_name = GetFilenameWithoutSuffix(filename);
     auto it = images.find(image_name);
     if(it!=images.end()) {
         SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "%s is exists", image_name.c_str());
@@ -51,6 +51,14 @@ void ImageEntrepot::LoadImageStrict(string filename){
         SDL_DestroyTexture(it->second);
         images[image_name] = texture;
     }
+}
+
+void ImageEntrepot::LoadTexture(string name, SDL_Texture* texture){
+    if(texture==nullptr){
+        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "texture is nullptr");
+        return;
+    }
+    images[name] = texture;
 }
 
 void ImageEntrepot::DeleteImage(string name){
@@ -84,7 +92,7 @@ void ImageEntrepot::Clear(){
     images.clear();
 }
 
-string GetNameFromFile(const string& filename){
+string GetFilenameWithoutSuffix(const string& filename){
     size_t pos = filename.find_last_of('/');
     string substring;
     if(pos != filename.npos)
@@ -95,4 +103,31 @@ string GetNameFromFile(const string& filename){
     if(final_pos == substring.npos)
         return substring;
     return substring.substr(0, final_pos);
+}
+
+string GetFilename(const string& filename){
+    auto pos = filename.find_last_of(Director::PathSplitSymbol);
+    return filename.substr(pos+1);
+}
+
+FileType GetFileType(const string& filename){
+    auto pos = filename.find_last_of('.');
+    if(pos==filename.npos)
+        return FILE_TYPE_UNRECOGNIZE;
+    string suffix = filename.substr(pos);
+    std::transform(suffix.begin(), suffix.end(), suffix.begin(), ::tolower);
+    if(suffix==".png" || suffix==".bmp" || suffix==".jpg" || suffix==".jpeg" || suffix==".gif")
+        return FILE_TYPE_IMAGE;
+    if(suffix==".json")
+        return FILE_TYPE_JSON;
+    if(suffix==".txt")
+        return FILE_TYPE_TXT;
+    return FILE_TYPE_UNRECOGNIZE;
+}
+
+string GetBaseName(const string& filename){
+    int pos = filename.find_last_of(Director::PathSplitSymbol);
+    if(pos == filename.npos)
+        return "";
+    return filename.substr(0, pos);
 }

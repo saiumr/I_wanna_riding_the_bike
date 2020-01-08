@@ -2,7 +2,7 @@
 // Created by 桂明谦 on 2020/1/2.
 //
 
-#include "texturemanager.hpp"
+#include "ImageSheetor/texturemanager.hpp"
 
 TextureManager::TextureManager(SDL_Renderer* render, vector<ImageSheet::Image> images){
     for(auto& image : images){

@@ -22,7 +22,7 @@
 #include <map>
 using namespace std;
 
-string GetNameFromFile(const string& filename);
+string GetNameFromFileWithoutSuffix(const string& filename);
 
 class ImageSheetor:public App{
 public:

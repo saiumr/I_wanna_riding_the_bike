@@ -4,13 +4,13 @@
 
 #include "engin/gui/ibutton.hpp"
 
-IButton::IButton():GUIComponent(),button_pressed(false),state(NORMAL),clickCallBack(nullptr),buttonPressCallBack(nullptr),buttonReleaseCallBack(nullptr),mouseMoveCallBack(nullptr){}
+using namespace GUI;
 
-IButton::IButton(int x, int y, int w, int h):GUIComponent(x, y, w, h),button_pressed(false),state(NORMAL),clickCallBack(nullptr),buttonReleaseCallBack(nullptr),buttonPressCallBack(nullptr),mouseMoveCallBack(nullptr){}
+SDL_Color IButton::dark_cover = {50, 50, 50, 200};
 
-IButton::State IButton::GetState(){
-    return state;
-}
+IButton::IButton():GUIComponent(),fgcolor({0, 0, 0, 255}),button_pressed(false),mouse_moved(false){}
+
+IButton::IButton(int x, int y, int w, int h):GUIComponent(x, y, w, h),fgcolor({0, 0, 0, 255}),button_pressed(false),mouse_moved(false){}
 
 void IButton::SetText(const string text){
     this->text = text;
@@ -20,47 +20,57 @@ string IButton::GetText(){
     return text;
 }
 
+SDL_Color IButton::GetForegroundColor(){
+    return fgcolor;
+}
+
+void IButton::SetForegroundColor(int r, int g, int b, int a){
+    fgcolor.r = r;
+    fgcolor.g = g;
+    fgcolor.b = b;
+    fgcolor.a = a;
+}
+
 void IButton::EventHandle(SDL_Event& event){
-        if(event.type==SDL_MOUSEBUTTONDOWN) {
+    old_button_pressed = button_pressed;
+    mouse_moved = false;
+    if(event.type==SDL_MOUSEBUTTONDOWN) {
+        SDL_Point point = {event.button.x, event.button.y};
+        if (SDL_PointInRect(&point, &rect)) {
+            button_pressed = true;
+        }
+    }
+    if(event.type==SDL_MOUSEBUTTONUP) {
+        if(old_button_pressed) {
             SDL_Point point = {event.button.x, event.button.y};
             if (SDL_PointInRect(&point, &rect)) {
-                state = PRESSED;
-                if (buttonPressCallBack)
-                    buttonPressCallBack(event.button);
+                button_pressed = false;
             }
         }
-        if(event.type==SDL_MOUSEBUTTONUP) {
-            if (state==PRESSED) {
-                SDL_Point point = {event.button.x, event.button.y};
-                if (SDL_PointInRect(&point, &rect))
-                    if (clickCallBack)
-                        clickCallBack(event.button);
-                state = NORMAL;
-                if (buttonReleaseCallBack)
-                    buttonReleaseCallBack(event.button);
-            }
-        }
-        if(event.type==SDL_MOUSEMOTION){
-            SDL_Point point = {event.motion.x, event.motion.y};
-            if(SDL_PointInRect(&point, &rect)){
-                if(mouseMoveCallBack)
-                    mouseMoveCallBack(event.motion);
-            }
-        }
+    }
+    if(event.type==SDL_MOUSEMOTION){
+        SDL_Point point = {event.motion.x, event.motion.y};
+        if(SDL_PointInRect(&point, &rect))
+            mouse_moved = true;
+    }
 }
 
-void IButton::SetCallBack_ButtonPress(ButtonPress_CallBack ncallback) {
-    buttonPressCallBack = ncallback;
+bool IButton::QueryState(unsigned int s){
+    switch(s){
+        case PRESSED:
+            return !old_button_pressed&&button_pressed;
+        case RELEASED:
+            return old_button_pressed&&!button_pressed;
+        case PRESSING:
+            return old_button_pressed&&button_pressed;
+        case MOUSE_MOVING:
+            return mouse_moved;
+        case NORMAL:
+            return !old_button_pressed&&!button_pressed&&!mouse_moved;
+    }
+    return false;
 }
 
-void IButton::SetCallBack_ButtonRelease(ButtonRelease_CallBack ncallback){
-    buttonReleaseCallBack = ncallback;
-}
-
-void IButton::SetCallBack_MouseMove(MouseMove_CallBack ncallback){
-    mouseMoveCallBack = ncallback;
-}
-
-void IButton::SetCallBack_Click(Click_CallBack ncallback){
-    clickCallBack = ncallback;
+void IButton::update(){
+    old_button_pressed = button_pressed;
 }

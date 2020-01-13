@@ -7,19 +7,18 @@
 
 #include "ibutton.hpp"
 
-
-class Button:public IButton{
-public:
-    Button();
-    Button(const string text, int x, int y, int w, int h);
-    void SetForegroundColor(int r, int g, int b, int a=255);
-    void SetBackgroundColor(int r, int g, int b, int a=255);
-private:
-    static SDL_Color dark_cover;
-    void draw() override;
-    void update() override;
-    SDL_Color foregroundColor;
-    SDL_Color backgroundColor;
-};
+namespace GUI {
+    class Button : public IButton {
+    public:
+        Button();
+        Button(string text, int x, int y, int w, int h);
+        void SetBackgroundColor(int r, int g, int b, int a = 255);
+        SDL_Color GetBackgroundColor();
+    private:
+        void draw() override;
+        SDL_Color foregroundColor;
+        SDL_Color backgroundColor;
+    };
+}
 
 #endif //I_WANNA_RIDING_THE_BIKE_BUTTON_HPP

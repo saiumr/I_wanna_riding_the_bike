@@ -10,15 +10,18 @@
 #include <string>
 using namespace std;
 
-class GUIResourceManager {
-public:
-    static void InitGUI(SDL_Renderer* render);
-    static SDL_Renderer* GetRender();
-    static string GetTTFPath();
-private:
-    static string ttf_path;
-    static SDL_Renderer* render;
-};
+namespace GUI{
 
+    class GUIResourceManager {
+    public:
+        static void InitGUI(SDL_Renderer* render);
+        static SDL_Renderer* GetRender();
+        static string GetTTFPath();
+    private:
+        static string ttf_path;
+        static SDL_Renderer* render;
+    };
+
+}
 
 #endif //I_WANNA_RIDING_THE_BIKE_GUIRESOURCEMANAGER_HPP

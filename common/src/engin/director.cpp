@@ -1,4 +1,5 @@
 #include "engin/director.hpp"
+using namespace GUI;
 
 Director* Director::director = nullptr;
 const string Director::Platform = SDL_GetPlatform();

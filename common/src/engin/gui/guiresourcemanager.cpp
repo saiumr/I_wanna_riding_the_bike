@@ -4,6 +4,8 @@
 
 #include "engin/gui/guiresourcemanager.hpp"
 
+using namespace GUI;
+
 string GUIResourceManager::ttf_path = "resources/Fangsong.ttf";
 SDL_Renderer* GUIResourceManager::render = nullptr;
 

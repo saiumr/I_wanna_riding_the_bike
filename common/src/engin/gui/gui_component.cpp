@@ -4,6 +4,8 @@
 
 #include "engin/gui/gui_component.hpp"
 
+using namespace GUI;
+
 GUIComponent::GUIComponent():Object(),visiable(true),image(nullptr){}
 
 GUIComponent::GUIComponent(int x, int y, int w, int h):Object(x, y, w, h),visiable(false),image(nullptr){}

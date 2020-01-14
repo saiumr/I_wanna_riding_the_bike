@@ -16,11 +16,11 @@ void IButton::SetText(const string text){
     this->text = text;
 }
 
-string IButton::GetText(){
+string IButton::GetText() const{
     return text;
 }
 
-SDL_Color IButton::GetForegroundColor(){
+SDL_Color IButton::GetForegroundColor() const{
     return fgcolor;
 }
 
@@ -55,7 +55,7 @@ void IButton::EventHandle(SDL_Event& event){
     }
 }
 
-bool IButton::QueryState(unsigned int s){
+bool IButton::QueryState(unsigned int s) const{
     switch(s){
         case PRESSED:
             return !old_button_pressed&&button_pressed;

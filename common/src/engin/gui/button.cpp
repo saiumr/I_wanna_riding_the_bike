@@ -21,7 +21,7 @@ void Button::SetBackgroundColor(int r, int g, int b, int a){
     backgroundColor.a = a;
 }
 
-SDL_Color Button::GetBackgroundColor(){
+SDL_Color Button::GetBackgroundColor() const{
     return backgroundColor;
 }
 

@@ -6,7 +6,6 @@
 #define I_WANNA_RIDING_THE_BIKE_IBUTTON_HPP
 
 #include "gui_component.hpp"
-#include "guiheader.hpp"
 #include <string>
 using namespace std;
 
@@ -23,12 +22,12 @@ namespace GUI{
         };
         IButton();
         IButton(int x, int y, int w, int h);
-        void SetText(const string text);
-        string GetText();
+        void SetText(string text);
+        string GetText() const;
         void EventHandle(SDL_Event &event) override;
-        SDL_Color GetForegroundColor();
+        SDL_Color GetForegroundColor() const;
         void SetForegroundColor(int r, int g, int b, int a = 255);
-        bool QueryState(unsigned int s) override;
+        bool QueryState(unsigned int s) const override;
     protected:
         SDL_Color fgcolor;
         string text;

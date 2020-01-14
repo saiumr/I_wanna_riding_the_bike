@@ -13,8 +13,8 @@ namespace GUI {
         Button();
         Button(string text, int x, int y, int w, int h);
         void SetBackgroundColor(int r, int g, int b, int a = 255);
-        SDL_Color GetBackgroundColor();
-    private:
+        SDL_Color GetBackgroundColor() const;
+    protected:
         void draw() override;
         SDL_Color foregroundColor;
         SDL_Color backgroundColor;

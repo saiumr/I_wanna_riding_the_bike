@@ -16,12 +16,12 @@ namespace GUI {
     public:
         GUIComponent();
         GUIComponent(int x, int y, int w, int h);
-        bool IsVisiable();
+        bool IsVisiable() const;
         void Show();
         void Hide();
         virtual void EventHandle(SDL_Event &event) = 0;
         void Update();
-        virtual bool QueryState(unsigned int s) = 0;
+        virtual bool QueryState(unsigned int s) const = 0;
     protected:
         virtual void draw() = 0;
         virtual void update() = 0;

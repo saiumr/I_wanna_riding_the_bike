@@ -9,6 +9,7 @@
 #include "engin/gui/checkbox.hpp"
 #include "engin/gui/radiobutton.hpp"
 #include "engin/gui/slidebar.hpp"
+#include "engin/gui/messagebox.hpp"
 
 using namespace GUI;
 
@@ -40,6 +41,7 @@ public:
         slideBar.SetType(SlideBar::Type::VERTICAL);
         slideBar.Move(400, 300);
         slideBar.SetValue(50);
+
     }
 
     void EventHandle(SDL_Event& event) override{
@@ -53,7 +55,7 @@ public:
 
     void Update() override{
         if(button.QueryState(Button::RELEASED))
-            SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "clicked");
+            ShowMessageBox({100, 100}, {400, 400}, ButtonType::YES_NO, "test message", "this is a test messagebox");
 
         //GUI Update must at the end
         button.Update();

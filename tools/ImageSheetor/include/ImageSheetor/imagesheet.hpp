@@ -17,8 +17,6 @@ public:
     public:
         static Image Error_Image;
         Image(string nname, SDL_Surface* surface, SDL_Rect r);
-        //Image(Image& otr) = delete;
-        //Image& operator=(const Image& otr) = delete;
         SDL_Surface* GetImage() const;
         SDL_Rect     GetRect() const;
         string       GetName() const;

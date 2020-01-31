@@ -107,6 +107,8 @@ string GetFilenameWithoutSuffix(const string& filename){
 
 string GetFilename(const string& filename){
     auto pos = filename.find_last_of(Director::PathSplitSymbol);
+    if(pos == filename.npos)
+        return filename;
     return filename.substr(pos+1);
 }
 

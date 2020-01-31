@@ -6,4 +6,4 @@ include_directories(${TOOL_COMMON_INCLUDE_DIRS})
 link_libraries(${TOOL_COMMON_LIBRARIES} ${COMMON_PURE_LIBRARIES} ${SDL_TOTLE_LIBRARIES})
 
 add_subdirectory(ImageSheetor)
-add_subdirectory(MapEditor)
+add_subdirectory(MapEditor/Cpp_Parser)

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MapEditor" default="compile" basedir=".">
+    <description>MapEditor for I_Wanna_Riding_A_Bike</description>
+
+    <target name="compile" description="compile app">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="." destdir="build/classes">
+            <classpath path="MapEditor/libs/*.jar">
+                <fileset dir="MapEditor/libs" includes="*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" description="package to jar" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/MapEditor.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="MapEditor.src.MapEditor"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="MapEditor/libs/*"/>
+            </manifest>
+            <zipfileset dir="." includes="MapEditor/libs/*"/>
+            <zipfileset dir="." includes="resources/*" />
+        </jar>
+    </target>
+
+    <target name="run" description="run jar" depends="jar">
+        <java jar="build/jar/MapEditor.jar" fork="true">
+            <classpath path="MapEditor/libs/*.jar">
+                <fileset dir="MapEditor/libs" includes="*.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean" description="clean all build files">
+        <delete dir="build"/>
+    </target>
+</project>

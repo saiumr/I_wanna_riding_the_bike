@@ -6,28 +6,30 @@
 
 ```json
 {
-	"image1" : 
-	{
-		"name" : "image1",
-		"rect" : 
+	"image_path" : "result.png",
+	"images":
+	[
 		{
-			"height" : 200,
-			"width" : 100,
-			"x" : 0,
-			"y" : 0
-		}
-	},
-	"image2" : 
-	{
-		"name" : "image2",
-		"rect" : 
+			"name" : "image1",
+			"rect" : 
+			{
+				"height" : 200,
+				"width" : 100,
+				"x" : 0,
+				"y" : 0
+			}
+		},
 		{
-			"height" : 300,
-			"width" : 100,
-			"x" : 1,
-			"y" : 0
-		}
-	},
+			"name" : "image2",
+			"rect" : 
+			{
+				"height" : 300,
+				"width" : 100,
+				"x" : 1,
+				"y" : 0
+			}
+		},
+	]
 }
 ```
 

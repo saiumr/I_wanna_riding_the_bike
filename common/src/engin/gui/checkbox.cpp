@@ -100,7 +100,8 @@ bool CheckBox::IsChecked() const{
 void CheckBox::EventHandle(SDL_Event& event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         SDL_Point mouse_pos = {event.button.x, event.button.y};
-        if(SDL_PointInRect(&mouse_pos, &rect))
+        SDL_Rect rrect = Rectf2Rect(&rect);
+        if(SDL_PointInRect(&mouse_pos, &rrect))
             checked = !checked;
     }
 }
@@ -146,14 +147,15 @@ void CheckBox::draw(){
     //Draw Box
     SDL_Color bgcolor = GetBackgroundColor();
     SDL_SetRenderDrawColor(render, bgcolor.r, bgcolor.g, bgcolor.b, bgcolor.a);
-    SDL_RenderFillRect(render, &rect);
+    SDL_Rect rrect = Rectf2Rect(&rect);
+    SDL_RenderFillRect(render, &rrect);
     SDL_SetRenderDrawColor(render, boxcolor.r, boxcolor.g, boxcolor.b, boxcolor.a);
-    SDL_RenderDrawRect(render, &rect);
+    SDL_RenderDrawRect(render, &rrect);
     //Draw right shape
     if(checked){
         SDL_SetRenderDrawColor(render, rightcolor.r, rightcolor.g, rightcolor.b, rightcolor.a);
-        SDL_Point p1 = {rect.x+rect.w/4, rect.y+rect.h/2},
-                  p2 = {rect.x+rect.w/2, static_cast<int>(rect.y+rect.h*7/8.0)},
+        SDL_Point p1 = {rrect.x+rrect.w/4, rrect.y+rrect.h/2},
+                  p2 = {rrect.x+rrect.w/2, static_cast<int>(rect.y+rect.h*7/8.0)},
                   p3 = {static_cast<int>(rect.x+rect.w*7/8.0), static_cast<int>(rect.y+rect.h/8.0)};
         SDL_RenderDrawLine(render, p1.x, p1.y, p2.x, p2.y);
         SDL_RenderDrawLine(render, p2.x, p2.y, p3.x, p3.y);

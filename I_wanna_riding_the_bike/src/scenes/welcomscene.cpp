@@ -15,6 +15,10 @@ void WelcomeScene::OnInit(){
     FC_LoadFont(font, Director::GetDirector()->GetRender(), "resources/Fangsong.ttf", 20, {255, 255 ,255 ,255}, TTF_STYLE_NORMAL);
     kid.SetImage("testImage");
     kid.Resize(kid.GetOriginalSize().x*10, kid.GetOriginalSize().y*10);
+    sprite.SetImage("ShinnyHead");
+    sprite.Resize(sprite.GetOriginalSize().x*5, sprite.GetOriginalSize().y*5);
+    sprite.Move(Director::GetDirector()->GetWindowWidth()/2, Director::GetDirector()->GetWindowHeight()/2);
+    sprite.RunAction(RotateTo::create(1000, 90));
     angle = 0;
 }
 
@@ -37,10 +41,14 @@ void WelcomeScene::step(){
             pos.x = kid_size.w*i+radius*cos(radian)+50;
             pos.y = kid_size.h*j+radius*sin(radian)+50;
             kid.Move(pos.x, pos.y);
-            kid.Draw();
+            kid.Update();
         }
     angle+=2;
     if(angle >= 360)
         angle-=360;
+
+    //Mine code
+    sprite.Update();
+
     FC_Draw(font, Director::GetDirector()->GetRender(), 500, 750, "由 saiumr 和 VisualGMQ 制作");
 }

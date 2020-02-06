@@ -8,6 +8,7 @@
 #include "engin/scene.hpp"
 #include "engin/director.hpp"
 #include "engin/sprite.hpp"
+#include "engin/action/system_actions.hpp"
 
 class WelcomeScene:public Scene {
 public:
@@ -20,6 +21,7 @@ private:
     FC_Font* font;
     Sprite kid;
     float angle;
+    Sprite sprite;
 };
 
 #endif //I_WANNA_RIDING_THE_BIKE_WELCOMSCENE_HPP

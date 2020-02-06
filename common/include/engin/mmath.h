@@ -47,6 +47,8 @@ typedef struct{
     float h;
 }Rectf;
 
+SDL_Rect Rectf2Rect(Rectf* rectf);
+
 typedef Rectf SDL_Rectf;
 
 typedef Pointf Vector;

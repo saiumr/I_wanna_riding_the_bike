@@ -4,9 +4,9 @@
 
 #include "engin/sprite.hpp"
 
-Sprite::Sprite():isshow(true),flip(NO_FLIP){}
+Sprite::Sprite():isshow(true),flip(NO_FLIP),action(nullptr){}
 
-Sprite::Sprite(int x, int y, string image_name):Object(x, y, 0, 0),isshow(true),flip(NO_FLIP){
+Sprite::Sprite(int x, int y, string image_name):Object(x, y, 0, 0),isshow(true),flip(NO_FLIP),action(nullptr){
     image = ImageEntrepot::GetImage(image_name);
     int w, h;
     SDL_QueryTexture(image, nullptr, nullptr, &w, &h);
@@ -52,6 +52,11 @@ void Sprite::SetImage(string name){
     SuitSize();
 }
 
+void Sprite::SetImage(Sprite_Image* image){
+    this->image = image;
+    SuitSize();
+}
+
 SDL_Point Sprite::GetOriginalSize(){
     int w, h;
     SDL_QueryTexture(image, nullptr, nullptr, &w, &h);
@@ -60,7 +65,7 @@ SDL_Point Sprite::GetOriginalSize(){
 
 void Sprite::Draw(){
     if(isshow) {
-        Point position = GetPosition();
+        Point position = GetIntPosition();
         SDL_Size size = GetSize();
         SDL_RendererFlip flip_flag = (flip==FLIP?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
         SDL_Rect dstrect = {static_cast<int>(position.x - size.w*anchor.x), static_cast<int>(position.y-size.h*anchor.y), size.w, size.h};
@@ -72,5 +77,22 @@ void Sprite::step(){}
 
 void Sprite::Update(){
     step();
+    if(action!=nullptr)
+        action->Step(this);
     Draw();
+}
+
+void Sprite::RunAction(Action* action){
+    this->action = action;
+    this->action->Play();
+}
+
+void Sprite::StopAllAction(){
+    if(action!=nullptr)
+        action->Stop();
+}
+
+void Sprite::PauseAllAction(){
+    if(action!=nullptr)
+        action->Pause();
 }

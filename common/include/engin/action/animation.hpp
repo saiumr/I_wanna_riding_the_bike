@@ -5,7 +5,8 @@
 #ifndef __ANIMATION_HPP__
 #define  __ANIMATION_HPP__
 #include "SDL.h"
-#include "imageEntrepot.hpp"
+#include "engin/imageEntrepot.hpp"
+#include "engin/action/action.hpp"
 #include <vector>
 #include <string>
 using namespace std;
@@ -27,15 +28,21 @@ private:
     SDL_Texture* image;
 };
 
-class Animation {
+class Animation:public Action {
 public:
+    static Animation* create(string name, vector<Frame> frames);
+    static Animation* create(string name, vector<SDL_Texture*> texture, vector<unsigned int> intervals);
+    static Animation* create(string name, vector<string> names, vector<unsigned int> intervals);
+    static Animation* create(vector<Frame> frames);
+    static Animation* create(vector<SDL_Texture*> texture, vector<unsigned int> intervals);
+    static Animation* create(vector<string> names, vector<unsigned int> intervals);
     Animation();
-    explicit Animation(vector<Frame> frames);
-    explicit Animation(vector<SDL_Texture*> texture, vector<unsigned int> intervals);
-    explicit Animation(vector<string> names, vector<unsigned int> intervals);
-    void Play();
-    void Pause();
-    void Stop();
+    Animation(string name, vector<Frame> frames);
+    Animation(string name, vector<SDL_Texture*> texture, vector<unsigned int> intervals);
+    Animation(string name, vector<string> names, vector<unsigned int> intervals);
+    void Play() override;
+    void Pause() override;
+    void Stop() override;
     void BackAFrame();
     void FrowardAFrame();
     bool IsEmpty();
@@ -48,15 +55,16 @@ public:
     void StepPrev();
     unsigned int GetCurrentFrameNum();
     SDL_Texture* Step();
+    void Step(Sprite* sprite) override;
     vector<Frame> GetAnimation();
     Frame GetCurrentFrame();
     void SetAnimation(vector<Frame> nframes);
 private:
+    static vector<Animation> animations;
     int count;
     bool isloop;
     unsigned int currentframe;
-    bool isplay;
-    vector<Frame> animations;
+    vector<Frame> frames;
 };
 
 class Animatable{

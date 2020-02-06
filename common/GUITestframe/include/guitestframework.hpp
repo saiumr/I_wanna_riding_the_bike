@@ -42,7 +42,7 @@ public:
      * 延时的长度(ms计)
      */
     static const int delay_time = 10;
-    GUITestframework(const string& title, int width, int height, Uint32 flag);
+    GUITestframework(const string& title, int width, int height, Uint32 flag=SDL_WINDOW_SHOWN);
     /**
      * 用于处理事件的函数，每次重写之后都需要调用GUITestframework::EventHandle()
      * @param event

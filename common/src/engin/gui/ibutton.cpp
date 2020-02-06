@@ -34,23 +34,24 @@ void IButton::SetForegroundColor(int r, int g, int b, int a){
 void IButton::EventHandle(SDL_Event& event){
     old_button_pressed = button_pressed;
     mouse_moved = false;
+    SDL_Point point = {event.button.x, event.button.y};
+    SDL_Rect rrect = Rectf2Rect(&rect);
     if(event.type==SDL_MOUSEBUTTONDOWN) {
-        SDL_Point point = {event.button.x, event.button.y};
-        if (SDL_PointInRect(&point, &rect)) {
+        if (SDL_PointInRect(&point, &rrect)) {
             button_pressed = true;
         }
     }
     if(event.type==SDL_MOUSEBUTTONUP) {
         if(old_button_pressed) {
             SDL_Point point = {event.button.x, event.button.y};
-            if (SDL_PointInRect(&point, &rect)) {
+            if (SDL_PointInRect(&point, &rrect)) {
                 button_pressed = false;
             }
         }
     }
     if(event.type==SDL_MOUSEMOTION){
         SDL_Point point = {event.motion.x, event.motion.y};
-        if(SDL_PointInRect(&point, &rect))
+        if(SDL_PointInRect(&point, &rrect))
             mouse_moved = true;
     }
 }

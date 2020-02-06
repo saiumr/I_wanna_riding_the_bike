@@ -32,12 +32,13 @@ void SlideBar::SetType(Type t){
 void SlideBar::EventHandle(SDL_Event& event){
     float prop = static_cast<float>(value-min_value)/(max_value-min_value);
     SDL_Rect button_rect;
+    SDL_Rect rrect = Rectf2Rect(&rect);
     switch(type) {
         case Type::HORIZONTAL:
-            button_rect = {rect.x + static_cast<int>(prop * len) - ButtonSize.w/2, rect.y-ButtonSize.h/2, ButtonSize.w, ButtonSize.h};
+            button_rect = {rrect.x + static_cast<int>(prop * len) - ButtonSize.w/2, rrect.y-ButtonSize.h/2, ButtonSize.w, ButtonSize.h};
             break;
         case Type::VERTICAL:
-            button_rect = {rect.x - ButtonSize.h / 2, rect.y + static_cast<int>(prop * len) - ButtonSize.w/2, ButtonSize.h, ButtonSize.w};
+            button_rect = {rrect.x - ButtonSize.h / 2, rrect.y + static_cast<int>(prop * len) - ButtonSize.w/2, ButtonSize.h, ButtonSize.w};
             break;
     }
     if(event.type==SDL_MOUSEBUTTONDOWN){
@@ -96,12 +97,13 @@ void SlideBar::drawButton(){
     float prop = (value-min_value)/(max_value-min_value);
     SDL_Renderer* render = GUIResourceManager::GetRender();
     SDL_Rect button_rect;
+    SDL_Rect rrect = Rectf2Rect(&rect);
     switch(type) {
         case Type::HORIZONTAL:
-            button_rect = {rect.x + static_cast<int>(prop * len) - ButtonSize.w/2, rect.y-ButtonSize.h/2, ButtonSize.w, ButtonSize.h};
+            button_rect = {rrect.x + static_cast<int>(prop * len) - ButtonSize.w/2, rrect.y-ButtonSize.h/2, ButtonSize.w, ButtonSize.h};
             break;
         case Type::VERTICAL:
-            button_rect = {rect.x - ButtonSize.h / 2, rect.y + static_cast<int>(prop * len) - ButtonSize.w/2, ButtonSize.h, ButtonSize.w};
+            button_rect = {rrect.x - ButtonSize.h / 2, rrect.y + static_cast<int>(prop * len) - ButtonSize.w/2, ButtonSize.h, ButtonSize.w};
             break;
     }
     SDL_SetRenderDrawColor(render, 200, 200, 200, 255);

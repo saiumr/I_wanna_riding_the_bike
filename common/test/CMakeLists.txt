@@ -7,6 +7,8 @@ add_executable(SDL_Draw_test SDL_Draw.cpp)
 add_executable(test_test test.cpp)
 add_executable(RectRectCollision_test RectRectCollision.cpp)
 add_executable(GUI_Components_test GUI_Components.cpp)
+add_executable(Animation_test Animation.cpp)
 
 target_link_libraries(RectRectCollision_test ${COMMON_TEST_LIBRARIES})
 target_link_libraries(GUI_Components_test ${COMMON_TEST_LIBRARIES})
+target_link_libraries(Animation_test ${COMMON_TEST_LIBRARIES})

@@ -27,10 +27,11 @@ void ImageButton::SetImage(SDL_Texture* normal, SDL_Texture* press) {
 
 void ImageButton::draw(){
     SDL_Renderer* render = GUIResourceManager::GetRender();
+    SDL_Rect rrect = Rectf2Rect(&rect);
     if(QueryState(PRESSED)||QueryState(PRESSING))
-        SDL_RenderCopy(render, press_image, nullptr, &rect);
+        SDL_RenderCopy(render, press_image, nullptr, &rrect);
     if(QueryState(NORMAL)||QueryState(MOUSE_MOVING))
-        SDL_RenderCopy(render, normal_image, nullptr, &rect);
+        SDL_RenderCopy(render, normal_image, nullptr, &rrect);
     SDL_SetRenderDrawColor(render, fgcolor.r, fgcolor.g, fgcolor.b, fgcolor.a);
     FC_Font* font = FC_CreateFont();
     const int font_size = 20;

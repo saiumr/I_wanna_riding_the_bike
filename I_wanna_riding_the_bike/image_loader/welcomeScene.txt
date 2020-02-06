@@ -1,2 +1,3 @@
 resources/testImage.png
 resources/black.png
+resources/ShinnyHead.bmp

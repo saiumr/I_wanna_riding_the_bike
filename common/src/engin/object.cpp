@@ -6,17 +6,21 @@
 
 Object::Object():rect({0, 0, 0, 0}),angle(0),anchor({0.5, 0.5}){}
 
-Object::Object(int x, int y, int w, int h):rect({x, y, w, h}),angle(0),anchor({0.5, 0.5}){}
+Object::Object(float x, float y, int w, int h):rect({x, y, static_cast<float>(w), static_cast<float>(h)}),angle(0),anchor({0.5, 0.5}){}
 
-Point Object::GetPosition(){
+Pointf Object::GetPosition(){
+    return {rect.x+anchor.x*rect.w, rect.y+anchor.y*rect.h};
+}
+
+Point Object::GetIntPosition(){
     return {static_cast<int>(rect.x+anchor.x*rect.w), static_cast<int>(rect.y+anchor.y*rect.h)};
 }
 
 SDL_Size Object::GetSize(){
-    return {rect.w, rect.h};
+    return {static_cast<int>(rect.w), static_cast<int>(rect.h)};
 }
 
-void Object::Move(int x, int y){
+void Object::Move(float x, float y){
     rect.x = x;
     rect.y = y;
 }
@@ -30,7 +34,7 @@ void Object::Resize(int w, int h){
     rect.h = h;
 }
 
-void Object::Translate(int delta_x, int delta_y){
+void Object::Translate(float delta_x, float delta_y){
     rect.x += delta_x;
     rect.y += delta_y;
 }
@@ -56,7 +60,7 @@ void Object::SetAnchorByPercent(float x, float y){
     anchor.y = y;
 }
 
-void Object::SetAnchorByPixel(float x, float y){
+void Object::SetAnchorByPixel(int x, int y){
     anchor.x = x/rect.w;
     anchor.y = y/rect.h;
 }

@@ -2,7 +2,7 @@
 // Created by 桂明谦 on 2019/11/30.
 //
 
-#include "engin/animation.hpp"
+#include "engin/action/animation.hpp"
 #include <utility>
 
 const Frame Frame::EMPTY_FRAME(nullptr, 0);
@@ -43,17 +43,59 @@ bool Frame::IsValid(){
     return image==nullptr||interval==0;
 }
 
-Animation::Animation(): isplay(false), count(0), isloop(false), currentframe(0){
-   animations.clear();
+vector<Animation> Animation::animations;
+
+Animation::Animation():count(0), isloop(false), currentframe(0){
+    frames.clear();
 }
 
-Animation::Animation(vector<Frame> frames): isplay(false), count(0), animations(std::move(frames)), isloop(false), currentframe(0){
+Animation::Animation(string name, vector<Frame> frames): count(0), frames(std::move(frames)), isloop(false), currentframe(0){
+    this->name = name;
 }
 
-Animation::Animation(vector<SDL_Texture*> texture, vector<unsigned int> intervals): count(0), isplay(false), isloop(false), currentframe(0){
+Animation::Animation(string name, vector<SDL_Texture*> texture, vector<unsigned int> intervals): count(0), isloop(false), currentframe(0){
+    this->name = name;
     for(int i=0;i<texture.size();i++){
         Frame frame(texture[i], intervals[i]);
-        animations.push_back(frame);
+        frames.push_back(frame);
+    }
+}
+
+Animation* Animation::create(string name, vector<Frame> frames){
+    animations.push_back(std::move(Animation(name, frames)));
+    return &animations[animations.size()-1];
+}
+
+Animation* Animation::create(string name, vector<SDL_Texture*> texture, vector<unsigned int> intervals){
+    animations.push_back(std::move(Animation(name, texture, intervals)));
+    return &animations[animations.size()-1];
+}
+
+Animation* Animation::create(string name, vector<string> names, vector<unsigned int> intervals){
+    animations.push_back(std::move(Animation(name, names, intervals)));
+    return &animations[animations.size()-1];
+}
+
+Animation* Animation::create(vector<Frame> frames){
+    animations.push_back(std::move(Animation("", frames)));
+    return &animations[animations.size()-1];
+}
+
+Animation* Animation::create(vector<SDL_Texture*> texture, vector<unsigned int> intervals){
+    animations.push_back(std::move(Animation("", texture, intervals)));
+    return &animations[animations.size()-1];
+}
+
+Animation* Animation::create(vector<string> names, vector<unsigned int> intervals){
+    animations.push_back(std::move(Animation("", names, intervals)));
+    return &animations[animations.size()-1];
+}
+
+Animation::Animation(string name, vector<string> names, vector<unsigned int> intervals):Animation(){
+    this->name = name;
+    for(int i=0;i<names.size();i++){
+        Frame frame(names[i], intervals[i]);
+        frames.push_back(frame);
     }
 }
 
@@ -66,53 +108,50 @@ bool Animation::IsLoop(){
 }
 
 bool Animation::IsPlaying(){
-    return isplay;
+    return isplaying;
 }
 
 bool Animation::IsEmpty(){
-    return animations.empty();
-}
-
-Animation::Animation(vector<string> names, vector<unsigned int> intervals):Animation(){
-    for(int i=0;i<names.size();i++){
-        Frame frame(names[i], intervals[i]);
-        animations.push_back(frame);
-    }
+    return frames.empty();
 }
 
 void Animation::Play(){
-    isplay = true;
+    isplaying = true;
 }
 
 void Animation::Pause(){
-    isplay = false;
+    isplaying = false;
 }
 
 void Animation::Stop(){
-    isplay = false;
+    isplaying = false;
     currentframe = 0;
     count = 0;
 }
 
 SDL_Texture* Animation::Step(){
     Frame frame = GetCurrentFrame();
-    if(!isplay)
+    if(!isplaying)
         return frame.GetImage();
     if(count<frame.GetInterval())
         count++;
     else{
         count = 0;
-        if(currentframe==animations.size()-1){
+        if(currentframe == frames.size() - 1){
             if(isloop){
                 currentframe = 0;
             }else{
-                isplay = false;
+                isplaying = false;
             }
         }else{
             currentframe++;
         }
     }
     return GetCurrentFrame().GetImage();
+}
+
+void Animation::Step(Sprite* sprite){
+    sprite->SetImage(Step());
 }
 
 void Animation::BackAFrame(){
@@ -122,17 +161,17 @@ void Animation::BackAFrame(){
 }
 
 void Animation::FrowardAFrame(){
-    if(currentframe<animations.size())
+    if(currentframe < frames.size())
         currentframe++;
     count = 0;
 }
 
 Frame Animation::GetPrevFrame(){
-    return currentframe>0?animations[currentframe-1]:Frame::EMPTY_FRAME;
+    return currentframe>0 ? frames[currentframe - 1] : Frame::EMPTY_FRAME;
 }
 
 Frame Animation::GetNextFrame(){
-    return currentframe<animations.size()?animations[currentframe+1]:Frame::EMPTY_FRAME;
+    return currentframe < frames.size() ? frames[currentframe + 1] : Frame::EMPTY_FRAME;
 }
 
 unsigned int Animation::GetCurrentFrameNum(){
@@ -140,7 +179,7 @@ unsigned int Animation::GetCurrentFrameNum(){
 }
 
 void Animation::StepNext(){
-    if(currentframe<animations.size()-1) {
+    if(currentframe < frames.size() - 1) {
         currentframe++;
         count = 0;
     }
@@ -154,15 +193,15 @@ void Animation::StepPrev(){
 }
 
 vector<Frame> Animation::GetAnimation(){
-    return animations;
+    return frames;
 }
 
 Frame Animation::GetCurrentFrame(){
-    return animations[currentframe];
+    return frames[currentframe];
 }
 
 void Animation::SetAnimation(vector<Frame> nframes){
-    animations = std::move(nframes);
+    frames = std::move(nframes);
 }
 
 SDL_Texture* Animatable::GetCurrentImage(){

@@ -40,9 +40,10 @@ void Button::draw(){
                                        backgroundColor.b*(1-alpha)+dark_cover.b*alpha,
                                        255);
     }
-    SDL_RenderFillRect(render, &rect);
+    SDL_Rect rrect = Rectf2Rect(&rect);
+    SDL_RenderFillRect(render, &rrect);
     SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
-    SDL_RenderDrawRect(render, &rect);
+    SDL_RenderDrawRect(render, &rrect);
     if(font) {
         const int text_width = FC_GetWidth(font, text.c_str()),
                     text_height = FC_GetHeight(font, text.c_str());

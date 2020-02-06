@@ -8,6 +8,7 @@
 #include "SDL.h"
 #include "object.hpp"
 #include "imageEntrepot.hpp"
+#include "action/action.hpp"
 #include <string>
 using namespace std;
 
@@ -18,12 +19,15 @@ enum Flip_Flag{
     NO_FLIP
 };
 
+class Action;
+
 class Sprite:public Object{
 public:
     Sprite();
     Sprite(int x, int y, string image_name);
     Sprite_Image* GetImage();
     void SetImage(string name);
+    void SetImage(Sprite_Image* image);
     SDL_Point GetOriginalSize();
     void Show();
     void Hide();
@@ -33,11 +37,16 @@ public:
     bool IsFlip();
     virtual void Draw();
     void Update();
+    void RunAction(Action* action);
+    //void StopAction(string name);
+    void StopAllAction();
+    void PauseAllAction();
 protected:
     virtual void step();
     Sprite_Image* image;
     bool isshow;
     Flip_Flag flip;
+    Action* action;
 };
 
 #endif //FARTRACE_SPRITE_HPP

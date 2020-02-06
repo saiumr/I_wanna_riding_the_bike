@@ -1,5 +1,9 @@
 #include "engin/mmath.h"
-#include <stdio.h>
+
+SDL_Rect Rectf2Rect(Rectf* rectf){
+    SDL_Rect rect = {(int)rectf->x, (int)rectf->y, (int)rectf->w, (int)rectf->h};
+    return rect;
+}
 
 Vector  Vec_CreateVec(const float x1, const float y1, const float x2, const float y2){
     Vector ret = {x1-x2, y1-y2};

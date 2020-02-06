@@ -148,7 +148,8 @@ SDL_Color RadioButton::GetInnerColor() const{
 void RadioButton::EventHandle(SDL_Event& event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         SDL_Point mouse_pos = {event.button.x, event.button.y};
-        if(SDL_PointInRect(&mouse_pos, &rect)) {
+        SDL_Rect rrect = Rectf2Rect(&rect);
+        if(SDL_PointInRect(&mouse_pos, &rrect)) {
             group->ClearAllState();
             selected = !selected;
         }
@@ -169,13 +170,14 @@ void RadioButton::draw(){
     SDL_Renderer* render = GUIResourceManager::GetRender();
     SDL_Color bgcolor = GetBackgroundColor();
     SDL_SetRenderDrawColor(render, bgcolor.r, bgcolor.g, bgcolor.b, bgcolor.a);
-    SDL_RenderFillRect(render, &rect);
+    SDL_Rect rrect = Rectf2Rect(&rect);
+    SDL_RenderFillRect(render, &rrect);
     SDL_SetRenderDrawColor(render, outline_color.r, outline_color.g, outline_color.b, outline_color.a);
-    SDL_RenderDrawRect(render, &rect);
+    SDL_RenderDrawRect(render, &rrect);
     if(selected){
         SDL_SetRenderDrawColor(render, inner_color.r, inner_color.g, inner_color.b, inner_color.a);
         const SDL_Size inner_padding = {static_cast<int>(GetSize().w*1/4.0), static_cast<int>(GetSize().h*1/4.0)};
-        SDL_Rect inner_rect = {rect.x+inner_padding.w, rect.y+inner_padding.h, rect.w-inner_padding.w*2, rect.h-inner_padding.h*2};
+        SDL_Rect inner_rect = {rrect.x+inner_padding.w, rrect.y+inner_padding.h, rrect.w-inner_padding.w*2, rrect.h-inner_padding.h*2};
         SDL_RenderFillRect(render, &inner_rect);
     }
 }

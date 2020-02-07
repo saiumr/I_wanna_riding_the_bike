@@ -11,5 +11,8 @@
 #include "rotateby.hpp"
 #include "rotateto.hpp"
 #include "scaleto.hpp"
+#include "sequence.hpp"
+#include "skew.hpp"
+#include "loopaction.hpp"
 
 #endif //I_WANNA_RIDING_THE_BIKE_SYSTEM_ACTIONS_HPP

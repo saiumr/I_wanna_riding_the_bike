@@ -26,3 +26,7 @@ string Action::GetName() {
 void Action::SetName(string name){
     this->name = name;
 }
+
+bool Action::IsPlaying(){
+    return isplaying;
+}

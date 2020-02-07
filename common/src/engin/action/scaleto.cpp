@@ -19,7 +19,7 @@ void ScaleTo::Step(Sprite* sprite){
     if(initsize.w==-1 && initsize.h==-1)
         initsize = sprite->GetSize();
     if(isplaying){
-        if(current_time<=time){
+        if(current_time<time){
             float factorx, factory;
             float prop = current_time/ static_cast<float>(time);
             if(dstscale.x<=1){

@@ -40,8 +40,6 @@ public:
     Animation(string name, vector<Frame> frames);
     Animation(string name, vector<SDL_Texture*> texture, vector<unsigned int> intervals);
     Animation(string name, vector<string> names, vector<unsigned int> intervals);
-    void Play() override;
-    void Pause() override;
     void Stop() override;
     void BackAFrame();
     void FrowardAFrame();

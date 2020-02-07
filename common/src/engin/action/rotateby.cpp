@@ -17,7 +17,7 @@ RotateBy::RotateBy(int time, float angle):deltaangle(angle){
 
 void RotateBy::Step(Sprite* sprite){
     if(isplaying){
-        if(current_time<=time){
+        if(current_time<time){
             sprite->RotateDelta(deltaangle/time);
             current_time++;
         }else{

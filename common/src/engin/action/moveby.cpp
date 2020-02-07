@@ -17,7 +17,7 @@ MoveBy::MoveBy(int time, int deltax, int deltay):distance({deltax, deltay}){
 
 void MoveBy::Step(Sprite* sprite){
     if(isplaying){
-        if(current_time<=time){
+        if(current_time<time){
             sprite->Translate(static_cast<float>(distance.x)/time, static_cast<float>(distance.y)/time);
             current_time++;
         } else

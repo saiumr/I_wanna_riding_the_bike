@@ -22,7 +22,7 @@ void MoveTo::Step(Sprite* sprite){
         distance.y = dstpos.y-sprite_pos.y;
     }
     if(isplaying){
-        if(current_time<=time){
+        if(current_time<time){
             sprite->Translate(static_cast<float>(distance.x)/time, static_cast<float>(distance.y)/time);
             current_time++;
         } else

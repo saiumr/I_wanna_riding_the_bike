@@ -21,7 +21,7 @@ void RotateTo::Step(Sprite* sprite){
         distance = dstangle - sprite->GetDegree();
     }
     if(isplaying){
-        if(current_time<=time){
+        if(current_time<time){
             sprite->RotateDelta(distance/time);
             current_time++;
         } else

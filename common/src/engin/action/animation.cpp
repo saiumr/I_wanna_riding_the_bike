@@ -115,16 +115,8 @@ bool Animation::IsEmpty(){
     return frames.empty();
 }
 
-void Animation::Play(){
-    isplaying = true;
-}
-
-void Animation::Pause(){
-    isplaying = false;
-}
-
 void Animation::Stop(){
-    isplaying = false;
+    Action::Stop();
     currentframe = 0;
     count = 0;
 }

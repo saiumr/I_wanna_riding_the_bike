@@ -16,6 +16,8 @@ public:
     virtual void Play();
     virtual void Stop();
     virtual void Pause();
+    bool IsPlaying();
+    //现在下面两个函数还没什么用，还没有针对动作编写名称
     string GetName();
     void SetName(string name);
 protected:
